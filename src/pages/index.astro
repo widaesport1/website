@@ -5,11 +5,21 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 <section class="hero">
   <button class="burger">&#9776;</button>
 
-  <nav class="navbar">
-    <a href="#">Home</a>
-    <a href="#">Teams</a>
-    <a href="#">Contact</a>
-  </nav>
+<nav class="navbar">
+  <a href="/">Home</a>
+
+  <button class="dropdown-toggle">
+    Teams <span>&#9662;</span>
+  </button>
+
+  <div class="dropdown-menu">
+    <a href="/teams/ecl">ECL Team</a>
+    <a href="/teams/lite">Lite Team</a>
+    <a href="/teams/pro">Pro Team</a>
+  </div>
+
+  <a href="/contact">Contact</a>
+</nav>
 
   <img src="/WIDAlogo.png" class="logo" alt="WIDA logo" />
 
@@ -130,7 +140,7 @@ html, body {
   }
 
   .burger {
-    position: absolute;
+    position: fixed;
     top: 2rem;
     left: 2rem;
     background: transparent;
@@ -142,13 +152,14 @@ html, body {
   }
 
   .navbar {
-    position: absolute;
+    position: fixed;
     z-index: 999;
     top: 0;
     left: 0;
+    bottom: 0;
 
-    height: 100vh;
-    width: 250px;
+    height: 100%;
+    width: 200px;
     background: rgba(0,0,0,.9);
 
     display: flex;
@@ -163,12 +174,46 @@ html, body {
     transform: translateX(0);
   }
 
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-  }
+.navbar a, .dropdown-toggle {
+  width: 100%;
+
+  color: white;
+  text-decoration: none;
+
+  padding: 1rem 2rem;
+
+  font-size: 1.2rem;
+
+  text-align: left;
+}
+
+.dropdown-toggle {
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 0.5rem;
+}
+.dropdown-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(255,255,255,0.04);
+}
+
+.dropdown-menu a {
+  padding-left: 3rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.dropdown-menu.open {
+  display: flex;
+}
 
   .logo {
     width: 180px;
@@ -591,4 +636,17 @@ html, body {
   slideElements.forEach((element) => {
     observer.observe(element);
   });
+
+
+const dropdownToggle = document.querySelector('.dropdown-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+if (dropdownToggle && dropdownMenu) {
+  dropdownToggle.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('open');
+  });
+}
+
+
+
 </script>
