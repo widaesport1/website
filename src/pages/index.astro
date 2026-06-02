@@ -2,24 +2,26 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 ---
 
+<div class="page-bg"></div>
+
 <section class="hero">
   <button class="burger">&#9776;</button>
 
-<nav class="navbar">
-  <a href="/">Home</a>
+  <nav class="navbar">
+    <a href="/">Home</a>
 
-  <button class="dropdown-toggle">
-    Teams <span>&#9662;</span>
-  </button>
+    <button class="dropdown-toggle">
+      Teams <span>&#9662;</span>
+    </button>
 
-  <div class="dropdown-menu">
-    <a href="/teams/ecl">ECL Team</a>
-    <a href="/teams/lite">Lite Team</a>
-    <a href="/teams/pro">Pro Team</a>
-  </div>
+    <div class="dropdown-menu">
+      <a href="/teams/ecl">ECL Team</a>
+      <a href="/teams/lite">Lite Team</a>
+      <a href="/teams/pro">Pro Team</a>
+    </div>
 
-  <a href="/contact">Contact</a>
-</nav>
+    <a href="/contact">Contact</a>
+  </nav>
 
   <img src="/WIDAlogo.png" class="logo" alt="WIDA logo" />
 
@@ -104,31 +106,47 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-* {
-  box-sizing: border-box;
-}
+  html,
   body {
     margin: 0;
-    font-family: sans-serif;
-    background:
-      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-      url('/backgrounds/widabackground.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: white;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
   }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: sans-serif;
+    color: white;
+    background: #0b0b0b;
+  }
+
+.page-bg {
+  position: fixed;
+
+  top: -30%;
+  left: -10%;
+
+  width: 120%;
+  height: 160%;
+
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+    url('/backgrounds/widabackground.png');
+
+  background-size: cover;
+  background-position: center;
+
+  z-index: -1;
+  will-change: transform;
+}
 
   .hero {
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,10 +161,13 @@ html, body {
     position: fixed;
     top: 2rem;
     left: 2rem;
+
     background: transparent;
     border: none;
+
     color: white;
     font-size: 2rem;
+
     cursor: pointer;
     z-index: 1000;
   }
@@ -154,16 +175,20 @@ html, body {
   .navbar {
     position: fixed;
     z-index: 999;
+
     top: 0;
     left: 0;
     bottom: 0;
 
-    height: 100%;
-    width: 200px;
+    height: 100vh;
+    width: 250px;
+
     background: rgba(0,0,0,.9);
 
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+
     padding-top: 6rem;
 
     transform: translateX(-100%);
@@ -174,46 +199,51 @@ html, body {
     transform: translateX(0);
   }
 
-.navbar a, .dropdown-toggle {
-  width: 100%;
+  .navbar a,
+  .dropdown-toggle {
+    width: 100%;
 
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 
-  padding: 1rem 2rem;
+    padding: 1rem 2rem;
 
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 
-  text-align: left;
-}
+    text-align: left;
+  }
 
-.dropdown-toggle {
-  background: transparent;
-  border: none;
+  .dropdown-toggle {
+    background: transparent;
+    border: none;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
-  gap: 0.5rem;
-}
-.dropdown-menu {
-  display: none;
-  flex-direction: column;
-  background: rgba(255,255,255,0.04);
-}
+    gap: 0.5rem;
+  }
 
-.dropdown-menu a {
-  padding-left: 3rem;
-  font-size: 1rem;
-  opacity: 0.85;
-}
+  .dropdown-menu {
+    display: none;
+    flex-direction: column;
 
-.dropdown-menu.open {
-  display: flex;
-}
+    width: 100%;
+
+    background: rgba(255,255,255,0.04);
+  }
+
+  .dropdown-menu a {
+    padding-left: 3rem;
+    font-size: 1rem;
+    opacity: 0.85;
+  }
+
+  .dropdown-menu.open {
+    display: flex;
+  }
 
   .logo {
     width: 180px;
@@ -243,7 +273,10 @@ html, body {
   .divider2 {
     width: 500px;
     height: 2px;
-    background: linear-gradient(to right, transparent, white, transparent);
+
+    background:
+      linear-gradient(to right, transparent, white, transparent);
+
     margin: 2rem auto;
   }
 
@@ -271,6 +304,7 @@ html, body {
     text-decoration: none;
 
     font-size: 2rem;
+
     backdrop-filter: blur(10px);
 
     transition:
@@ -281,8 +315,11 @@ html, body {
 
   .socials a:hover {
     background: #679540;
+
     transform: translateY(-4px);
-    box-shadow: 0 0 20px rgba(103,149,64,.7);
+
+    box-shadow:
+      0 0 20px rgba(103,149,64,.7);
   }
 
   .about {
@@ -300,60 +337,60 @@ html, body {
   .about p {
     max-width: 700px;
     margin: 0 auto;
+
     line-height: 1.5;
     opacity: 0.8;
+
     font-size: 1.1rem;
   }
 
-.community-section,.values-section {
-  width: 82%;
+  .community-section,
+  .values-section {
+    width: 82%;
 
-  background: #242424;
-  color: white;
+    background: #242424;
+    color: white;
 
+    overflow: hidden;
 
-  overflow: hidden;
+    box-shadow:
+      0 20px 50px rgba(0,0,0,.35);
+  }
 
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.35);
-}
+  .community-section {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
 
-.community-section {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+    margin-left: auto;
+    margin-right: 0;
 
-  margin-left: auto;
-  margin-right: 0;
+    padding: 6rem 5%;
 
-  padding: 6rem 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+    gap: 4rem;
 
-  gap: 4rem;
+    border-radius: 40px 0 0 40px;
+  }
 
-  border-radius: 40px 0 0 40px;
+  .values-section {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
 
-}
+    margin-left: 0;
+    margin-right: auto;
 
-.values-section {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+    padding: 8rem 5%;
 
-  margin-left: 0;
-  margin-right: auto;
-
-  padding: 8rem 5%;
-
-
-  border-radius: 0 40px 40px 0;
-
-}
+    border-radius: 0 40px 40px 0;
+  }
 
   .community-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     text-align: center;
   }
 
@@ -372,23 +409,30 @@ html, body {
 
   .discord-button {
     display: inline-block;
+
     background: #679540;
     color: #0b0b0b;
+
     padding: 1rem 1.5rem;
+
     font-weight: 700;
     text-decoration: none;
+
     transition: 0.2s ease;
+
     border-radius: 10px;
   }
 
   .discord-button:hover {
     background: #7caf4d;
+
     transform: translateY(-2px);
   }
 
   .community-image img {
     width: 100%;
     max-height: 520px;
+
     object-fit: cover;
   }
 
@@ -400,21 +444,26 @@ html, body {
   .value-row {
     display: grid;
     grid-template-columns: 320px 220px 1fr;
+
     gap: 2rem;
+
     align-items: center;
 
     padding: 1.5rem 0;
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.45);
   }
 
+  .value-row h3,
+  .value-row p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
-  .value-row h3,.value-row p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
   .value-row img {
     width: 100%;
     height: 120px;
+
     object-fit: cover;
   }
 
@@ -431,6 +480,7 @@ html, body {
 
   .slide-in {
     opacity: 0;
+
     transition:
       opacity 0.8s ease,
       transform 0.8s ease;
@@ -449,166 +499,145 @@ html, body {
     transform: translateX(0);
   }
 
+  @media (max-width: 800px) {
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
 
+    * {
+      box-sizing: border-box;
+    }
 
-@media (max-width: 800px) {
+    .hero {
+      min-height: 100vh;
+      width: 100%;
 
-  html,
-  body {
-    width: 100%;
-    overflow-x: hidden;
+      padding: 1.5rem;
+
+      text-align: center;
+    }
+
+    .logo {
+      width: 120px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 18vw, 5rem);
+      letter-spacing: 3px;
+    }
+
+    .socials {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+    }
+
+    .socials a {
+      width: 52px;
+      height: 52px;
+
+      font-size: 1.4rem;
+    }
+
+    .divider,
+    .divider2 {
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .about {
+      padding: 1rem;
+    }
+
+    .about h2 {
+      font-size: 1.7rem;
+      letter-spacing: 2px;
+    }
+
+    .about p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .community-section,
+    .values-section {
+      width: calc(100% - 2rem);
+
+      margin: 3rem auto;
+
+      padding: 2rem 1.2rem;
+
+      border-radius: 24px;
+
+      box-sizing: border-box;
+    }
+
+    .community-section {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .community-image {
+      order: -1;
+    }
+
+    .community-image img {
+      width: 100%;
+      max-height: 260px;
+
+      object-fit: cover;
+    }
+
+    .community-content {
+      text-align: center;
+    }
+
+    .community-content h2 {
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    .community-content p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .discord-button {
+      width: 100%;
+      text-align: center;
+    }
+
+    .values-section h2 {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .value-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .value-row img {
+      width: 100%;
+      height: 180px;
+
+      object-fit: cover;
+    }
+
+    .value-row h3 {
+      margin: 0;
+    }
+
+    .value-row p {
+      margin: 0;
+
+      font-size: 1rem;
+      line-height: 1.5;
+    }
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .hero {
-    min-height: 100vh;
-
-    width: 100%;
-
-    padding: 1.5rem;
-
-    text-align: center;
-  }
-
-  .logo {
-    width: 120px;
-  }
-
-  h1 {
-    font-size: clamp(3rem, 18vw, 5rem);
-
-    letter-spacing: 3px;
-  }
-
-  .socials {
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    gap: 0.7rem;
-  }
-
-  .socials a {
-    width: 52px;
-    height: 52px;
-
-    font-size: 1.4rem;
-  }
-
-  .divider,
-  .divider2 {
-    width: 80%;
-
-    max-width: 500px;
-  }
-
-  .about {
-    padding: 1rem;
-  }
-
-  .about h2 {
-    font-size: 1.7rem;
-
-    letter-spacing: 2px;
-  }
-
-  .about p {
-    font-size: 0.95rem;
-
-    line-height: 1.5;
-  }
-
-  .community-section,
-  .values-section {
-    width: calc(100% - 2rem);
-
-    margin: 3rem auto;
-
-    padding: 2rem 1.2rem;
-
-    border-radius: 24px;
-
-    box-sizing: border-box;
-  }
-
-  .community-section {
-    grid-template-columns: 1fr;
-
-    gap: 2rem;
-  }
-
-  .community-image {
-    order: -1;
-  }
-
-  .community-image img {
-    width: 100%;
-
-    max-height: 260px;
-
-    object-fit: cover;
-  }
-
-  .community-content {
-    text-align: center;
-  }
-
-  .community-content h2 {
-    font-size: 2rem;
-
-    line-height: 1.15;
-  }
-
-  .community-content p {
-    font-size: 1rem;
-
-    line-height: 1.5;
-  }
-
-  .discord-button {
-    width: 100%;
-
-    text-align: center;
-  }
-
-  .values-section h2 {
-    font-size: 2rem;
-
-    text-align: center;
-  }
-
-  .value-row {
-    grid-template-columns: 1fr;
-
-    gap: 1rem;
-
-    text-align: center;
-  }
-
-  .value-row img {
-    width: 100%;
-
-    height: 180px;
-
-    object-fit: cover;
-  }
-
-  .value-row h3 {
-    margin: 0;
-  }
-
-  .value-row p {
-    margin: 0;
-
-    font-size: 1rem;
-
-    line-height: 1.5;
-  }
-}
-
 </style>
 
 <script>
@@ -618,6 +647,15 @@ html, body {
   if (burger && navbar) {
     burger.addEventListener('click', () => {
       navbar.classList.toggle('open');
+    });
+  }
+
+  const dropdownToggle = document.querySelector('.dropdown-toggle');
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+
+  if (dropdownToggle && dropdownMenu) {
+    dropdownToggle.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('open');
     });
   }
 
@@ -637,16 +675,14 @@ html, body {
     observer.observe(element);
   });
 
+  const pageBg = document.querySelector('.page-bg') as HTMLElement;
 
-const dropdownToggle = document.querySelector('.dropdown-toggle');
-const dropdownMenu = document.querySelector('.dropdown-menu');
+  window.addEventListener('scroll', () => {
+    if (pageBg) {
+      const scrollY = window.scrollY;
 
-if (dropdownToggle && dropdownMenu) {
-  dropdownToggle.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('open');
+      pageBg.style.transform =
+        `translateY(${-scrollY * 0.15}px)`;
+    }
   });
-}
-
-
-
 </script>
