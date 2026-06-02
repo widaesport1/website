@@ -10,15 +10,17 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
   <nav class="navbar">
     <a href="/">Home</a>
 
-    <button class="dropdown-toggle">
-      Teams <span>&#9662;</span>
-    </button>
+   <button class="dropdown-toggle">
+  Teams <span class="dropdown-icon">+</span>
+  </button>
 
     <div class="dropdown-menu">
       <a href="/teams/ecl">ECL Team</a>
       <a href="/teams/lite">Lite Team</a>
       <a href="/teams/pro">Pro Team</a>
     </div>
+
+    <a href="/stats">Stats</a>
 
     <a href="/contact">Contact</a>
   </nav>
@@ -226,14 +228,26 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     gap: 0.5rem;
   }
 
-  .dropdown-menu {
-    display: none;
-    flex-direction: column;
+ .dropdown-menu {
+  display: flex;
+  flex-direction: column;
 
-    width: 100%;
+  width: 100%;
 
-    background: rgba(255,255,255,0.04);
-  }
+  background: rgba(0,0,0,.9);
+  max-height: 0;
+
+  opacity: 0;
+
+  overflow: hidden;
+
+  transform: translateY(-10px);
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.35s ease;
+}
 
   .dropdown-menu a {
     padding-left: 3rem;
@@ -241,9 +255,24 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     opacity: 0.85;
   }
 
-  .dropdown-menu.open {
-    display: flex;
-  }
+ .dropdown-menu.open {
+  max-height: 300px;
+
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+.dropdown-icon {
+  font-size: 0.9rem;
+
+  font-weight: 400;
+
+  opacity: 0.8;
+
+  transition: transform 0.2s ease;
+}
 
   .logo {
     width: 180px;
@@ -650,14 +679,30 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     });
   }
 
-  const dropdownToggle = document.querySelector('.dropdown-toggle');
-  const dropdownMenu = document.querySelector('.dropdown-menu');
+const dropdownToggle = document.querySelector('.dropdown-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
 
-  if (dropdownToggle && dropdownMenu) {
-    dropdownToggle.addEventListener('click', () => {
-      dropdownMenu.classList.toggle('open');
-    });
-  }
+if (dropdownToggle && dropdownMenu) {
+
+  dropdownToggle.addEventListener('click', () => {
+
+    dropdownMenu.classList.toggle('open');
+
+    const icon = dropdownToggle.querySelector('.dropdown-icon');
+
+    if (icon) {
+
+      if (dropdownMenu.classList.contains('open')) {
+        icon.textContent = '-';
+      } else {
+        icon.textContent = '+';
+      }
+
+    }
+
+  });
+
+}
 
   const slideElements = document.querySelectorAll('.slide-in');
 
