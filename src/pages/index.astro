@@ -394,41 +394,77 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     transform: translateX(0);
   }
 
-  @media (max-width: 800px) {
-    .divider,
-    .divider2 {
-      width: 80%;
-    }
 
-    .socials {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
 
-    .community-section,
-    .values-section {
-      width: 90%;
-      margin: 4rem auto;
-    }
-
-    .community-section {
-      grid-template-columns: 1fr;
-      padding: 4rem 2rem;
-    }
-
-    .community-content h2 {
-      font-size: 2.4rem;
-    }
-
-    .value-row {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .value-row img {
-      height: 180px;
-    }
+@media (max-width: 800px) {
+  .hero {
+    padding: 1.5rem;
   }
+
+  h1 {
+    font-size: clamp(3rem, 18vw, 5rem);
+    letter-spacing: 3px;
+  }
+
+  .logo {
+    width: 130px;
+  }
+
+  .socials {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .socials a {
+    width: 55px;
+    height: 55px;
+    font-size: 1.5rem;
+  }
+
+  .divider,
+  .divider2 {
+    width: 80%;
+  }
+
+  .about h2 {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+  }
+
+  .community-section,
+  .values-section {
+    width: 90%;
+    margin: 3rem auto;
+    border-radius: 30px;
+  }
+
+  .community-section {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+  }
+
+  .community-content h2,
+  .values-section h2 {
+    font-size: 2rem;
+  }
+
+  .community-content p,
+  .value-row p {
+    font-size: 1rem;
+  }
+
+  .value-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .value-row img {
+    height: 180px;
+  }
+}
+
+
 </style>
 
 <script>
