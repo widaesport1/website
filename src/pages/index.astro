@@ -2,64 +2,45 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 ---
 
-
-
 <section class="hero">
+  <button class="burger">&#9776;</button>
 
-
-
-
-  
-<button class="burger">
-  &#9776;
-</button>
-
-<nav class="navbar">
-  <a href="#">Home</a>
-  <a href="#">Teams</a>
-  <a href="#">Contact</a>
-</nav>
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">Teams</a>
+    <a href="#">Contact</a>
+  </nav>
 
   <img src="/WIDAlogo.png" class="logo" alt="WIDA logo" />
 
   <h1>WIDA</h1>
 
   <p>ECL organisation from Finland</p>
+
   <div class="divider"></div>
 
+  <div class="socials">
+    <a href="https://discord.com/invite/EbpBmBbVuz" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
+    <a href="https://www.twitch.tv/widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.instagram.com/widaesport/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://www.youtube.com/@widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.tiktok.com/@widaesport?_r=1&_t=ZN-93ztEUKhobm" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+  </div>
 
-<div class="socials">
-  <a href="https://discord.com/invite/EbpBmBbVuz" 
-  target="_blank"
-  rel="noopener noreferrer">
-  <i class="fab fa-discord"></i></a>
+  <section class="about">
+    <h2>Follow us on social media</h2>
 
-  <a href="https://www.twitch.tv/widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitch"></i></a>
+    <p>
+      Wida aims to maintain an active presence on social media.
+      Become part of the story and follow us through the links above!
+    </p>
 
-  <a href="https://www.instagram.com/widaesport/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-
-  <a href="https://x.com/widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
-
-  <a href="https://www.youtube.com/@widaesport" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
-
-  <a href="https://www.tiktok.com/@widaesport?_r=1&_t=ZN-93ztEUKhobm" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
-</div>
-
-
-
-<section class="about">
-  <h2>Follow us on social media</h2>
-
-  <p>
-  Wida aims to maintain an active presence on
-  social media. Become part of the story and follow
-  us through the links above!
-  </p>
+    <div class="divider2"></div>
+  </section>
 </section>
 
-
-
-<section class="community-section">
+<section class="community-section slide-in from-right">
   <div class="community-content">
     <h2>Wida, growing ECL organization</h2>
 
@@ -79,316 +60,376 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
   </div>
 </section>
 
+<section class="values-section slide-in from-left">
+  <h2>Our values</h2>
+
+  <div class="value-row">
+    <img src="/home/value1.png" alt="Growth" />
+    <h3>Growth</h3>
+    <p>
+      We strive to improve every day, both individually and as a team,
+      in and out of the game.
+    </p>
+  </div>
+
+  <div class="value-row">
+    <img src="/home/value2.png" alt="Community" />
+    <h3>Community</h3>
+    <p>
+      Wida is more than a team. We build an open and supportive
+      community for players and followers.
+    </p>
+  </div>
+
+  <div class="value-row">
+    <img src="/home/value3.png" alt="Commitment" />
+    <h3>Commitment</h3>
+    <p>
+      We are committed to long-term growth, as players, as leaders,
+      and as an organization.
+    </p>
+  </div>
 </section>
 
-
-
 <style>
-
-
-@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
-
-h1 {
-  font-family: 'Michroma', sans-serif;
-
-  font-size: clamp(4rem, 10vw, 10rem);
-
-  letter-spacing: 8px;
-
-  margin: 0;
-}
-
-
-
-.about {
-
-  color: white;
-
-  padding: 2rem 2rem;
-
-  text-align: center;
-
-
-}
-
-.about h2 {
-  font-family: 'Michroma', sans-serif;
-
-  font-size: 2.5rem;
-
-  letter-spacing: 4px;
-
-  margin-bottom: 1.5rem;
-}
-
-.about p {
-  max-width: 700px;
-
-  margin: 0 auto;
-
-  line-height: 1.5;
-
-  opacity: 0.8;
-
-  font-size: 1.1rem;
-}
-
-
-.community-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-.community-section {
-  background: #242424;
-  color: white;
-  padding: 6rem 8%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-
-  border-radius: 40px;
-
-  overflow: hidden;
-
-  box-shadow:
-  0 20px 50px rgba(0,0,0,.35);
-
-}
-
-
-
-.community-content h2 {
-  font-family: 'Michroma', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 2rem;
-}
-
-.community-content p {
-  font-size: 1.4rem;
-  line-height: 1.6;
-  max-width: 600px;
-  margin-bottom: 2.5rem;
-
-
-}
-
-.discord-button {
-  display: inline-block;
-  background: #679540;
-  color: #0b0b0b;
-  padding: 1rem 1.5rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: 0.2s ease;
-  border-radius: 10px;
-}
-
-.discord-button:hover {
-  background: #7caf4d;
-  transform: translateY(-2px);
-}
-
-.community-image img {
-  width: 100%;
-  max-height: 520px;
-  object-fit: cover;
-}
-
-
-
-@media (max-width: 800px) {
-  .community-section {
-    grid-template-columns: 1fr;
-    padding: 4rem 2rem;
-  }
-
-  .community-content h2 {
-    font-size: 2.4rem;
-  }
-}
-
+  @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
   body {
     margin: 0;
     font-family: sans-serif;
-  }
-
-.divider {
-  width: 500px;
-  height: 2px;
-  background:
-  linear-gradient(to right, transparent, white, transparent);
-  margin-bottom: 2rem;
-  margin-top: -1rem;
-
-}
-.burger {
-  position: absolute;
-
-  top: 2rem;
-  left: 2rem;
-
-  background: transparent;
-
-  border: none;
-
-  color: white;
-
-  font-size: 2rem;
-
-  cursor: pointer;
-
-  z-index: 1000;
-}
-
-.navbar {
-	position: absolute;
-
-	z-index: 999;
-
-  top: 0;
-  left: 0;
-
-  height: 100vh;
-  width: 250px;
-
-  background: rgba(0,0,0,.9);
-
-  display: flex;
-  flex-direction: column;
-
-  padding-top: 6rem;
-
-  transform: translateX(-100%);
-
-  transition: transform .3s ease;
-}
-
-.navbar a {
-  color: white;
-
-  text-decoration: none;
-
-  padding: 1rem 2rem;
-
-  font-size: 1.2rem;
-}
-.socials a {
-  color: white;
-  text-decoration: none;
-}
-
-.logo {
-  width: 180px;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: clamp(4rem, 10vw, 10rem);
-  letter-spacing: 8px;
-  margin: 0;
-}
-
-p {
-  font-size: 1.2rem;
-  opacity: 0.85;
-  margin-top: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.socials {
-  display: flex;
-  gap: 1rem;
-}
-
-.socials a {
-  width: 70px;
-  height: 70px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid #679540;
-
-  border-radius: 50%;
-
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 2rem;
-
-  backdrop-filter: blur(10px);
-
-  transition:
-    transform .2s ease,
-    background .2s ease,
-    box-shadow .2s ease;
-}
-
-.socials a:hover {
-  background: #679540;
-}
-
-
-  .hero {
-    min-height: 100vh;
-
     background:
       linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
       url('/backgrounds/widabackground.jpg');
-
     background-size: cover;
     background-position: center;
-	background-attachment: fixed;
-	
+    background-attachment: fixed;
+    color: white;
+    overflow-x: hidden;
+  }
 
+  .hero {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    color: white;
+    position: relative;
+    padding: 2rem;
     text-align: center;
-  
+  }
 
-	position: relative;
-	padding: 2rem;
+  .burger {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1000;
+  }
 
+  .navbar {
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
 
+    height: 100vh;
+    width: 250px;
+    background: rgba(0,0,0,.9);
 
+    display: flex;
+    flex-direction: column;
+    padding-top: 6rem;
 
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+  }
 
-}
+  .navbar.open {
+    transform: translateX(0);
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+  }
 
   .logo {
     width: 180px;
+    margin-bottom: 1rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Michroma', sans-serif;
   }
 
   h1 {
     font-size: clamp(4rem, 10vw, 10rem);
     letter-spacing: 6px;
+    margin: 0;
   }
 
-.navbar.open {
-  transform: translateX(0);
+  p {
+    font-size: 1.2rem;
+    opacity: 0.85;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .divider,
+  .divider2 {
+    width: 500px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, white, transparent);
+    margin: 2rem auto;
+  }
+
+  .divider {
+    margin-top: 0;
+  }
+
+  .socials {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .socials a {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #679540;
+    border-radius: 50%;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+
+    transition:
+      transform .2s ease,
+      background .2s ease,
+      box-shadow .2s ease;
+  }
+
+  .socials a:hover {
+    background: #679540;
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(103,149,64,.7);
+  }
+
+  .about {
+    padding: 2rem 2rem;
+    text-align: center;
+  }
+
+  .about h2 {
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .about p {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.5;
+    opacity: 0.8;
+    font-size: 1.1rem;
+  }
+
+.community-section,.values-section {
+  width: 82%;
+
+  background: #242424;
+  color: white;
+
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.35);
 }
 
+.community-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 
+  margin-left: auto;
+  margin-right: 0;
+
+  padding: 6rem 5%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 4rem;
+
+  border-radius: 40px 0 0 40px;
+
+}
+
+.values-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+
+  margin-left: 0;
+  margin-right: auto;
+
+  padding: 8rem 5%;
+
+
+  border-radius: 0 40px 40px 0;
+
+}
+
+  .community-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .community-content h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .community-content p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+  }
+
+  .discord-button {
+    display: inline-block;
+    background: #679540;
+    color: #0b0b0b;
+    padding: 1rem 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s ease;
+    border-radius: 10px;
+  }
+
+  .discord-button:hover {
+    background: #7caf4d;
+    transform: translateY(-2px);
+  }
+
+  .community-image img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+  }
+
+  .values-section h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: 3rem;
+  }
+
+  .value-row {
+    display: grid;
+    grid-template-columns: 320px 220px 1fr;
+    gap: 2rem;
+    align-items: center;
+
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  }
+
+
+  .value-row h3,.value-row p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+  .value-row img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  .value-row h3 {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  .value-row p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    max-width: 650px;
+  }
+
+  .slide-in {
+    opacity: 0;
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s ease;
+  }
+
+  .from-right {
+    transform: translateX(120px);
+  }
+
+  .from-left {
+    transform: translateX(-120px);
+  }
+
+  .slide-in.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 800px) {
+    .divider,
+    .divider2 {
+      width: 80%;
+    }
+
+    .socials {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .community-section,
+    .values-section {
+      width: 90%;
+      margin: 4rem auto;
+    }
+
+    .community-section {
+      grid-template-columns: 1fr;
+      padding: 4rem 2rem;
+    }
+
+    .community-content h2 {
+      font-size: 2.4rem;
+    }
+
+    .value-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .value-row img {
+      height: 180px;
+    }
+  }
 </style>
-
-
-
-
-
-
-
 
 <script>
   const burger = document.querySelector('.burger');
@@ -399,4 +440,20 @@ p {
       navbar.classList.toggle('open');
     });
   }
+
+  const slideElements = document.querySelectorAll('.slide-in');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  slideElements.forEach((element) => {
+    observer.observe(element);
+  });
 </script>
