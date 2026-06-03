@@ -145,10 +145,10 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
       <h3>Leagues</h3>
 
       <div class="league-grid">
-        <img src="/home/ecl-pro.png" alt="ECL Pro" />
-        <img src="/home/ecl.png" alt="ECL" />
-        <img src="/home/ecl-core.png" alt="ECL Core" />
-        <img src="/home/ecl-lite.png" alt="ECL Lite" />
+        <img src="/home/footer/eclpro.png" alt="ECL Pro" />
+        <img src="/home/footer/fcl.png" alt="FCL" />
+        <img src="/home/footer/eclcore.png" alt="ECL Core" />
+        <img src="/home/footer/ecllite.png" alt="ECL Lite" />
       </div>
     </div>
 
@@ -623,17 +623,33 @@ html, body {
 }
 
 .footer-logos {
-  padding-left: 7rem;
+  padding-left: 0;
+  align-items: center;
+  text-align: center;
 }
-.footer-content {
+
+/*.footer-content {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 300px));
   justify-content: center;
-  gap: clamp(2rem, 5vw, 5rem);
+  gap: clamp(2rem, 6vw, 6rem);
   align-items: start;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}*/
+
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+
+  gap: 4rem;
+  align-items: start;
 }
 
 .footer-column {
@@ -641,8 +657,8 @@ html, body {
   flex-direction: column;
   gap: 0.8rem;
 
-
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
 }
 
 .footer-column h3 {
@@ -665,21 +681,20 @@ html, body {
   transform: translateX(6px);
 }
 
-.footer-center {
-  align-items: center;
-  text-align: center;
-}
-
 
 .league-grid {
   display: grid;
-  grid-template-columns: repeat(2, 120px);
+  grid-template-columns: repeat(2, minmax(80px, 120px));
+  justify-content: center;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .league-grid img {
-  width: 120px;
+  width: 100%;
+  max-width: 120px;
   height: auto;
+  display: block;
 }
 
 
