@@ -1,0 +1,37 @@
+<div class="page-bg"></div>
+
+<style>
+  .page-bg {
+    position: fixed;
+
+    top: -30%;
+    left: -10%;
+
+    width: 120%;
+    height: 160%;
+
+    background:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url('/backgrounds/widabackground.png');
+
+    background-size: cover;
+    background-position: center;
+
+    z-index: -1;
+    will-change: transform;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const pageBg = document.querySelector('.page-bg') as HTMLElement;
+
+  window.addEventListener('scroll', () => {
+    if (pageBg) {
+      const scrollY = window.scrollY;
+
+      pageBg.style.transform =
+        `translateY(${-scrollY * 0.15}px)`;
+    }
+  });
+</script>

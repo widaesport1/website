@@ -1,0 +1,189 @@
+<footer class="site-footer">
+  <div class="footer-logo-row">
+    <img src="/WIDAlogo.png" alt="WIDA logo" class="footer-logo" />
+    <img src="/home/footer/sportsgamer.png" alt="SportsGamer logo" class="footer-logo sportsgamer-logo" />
+  </div>
+
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>Follow us</h3>
+
+      <a href="https://www.instagram.com/widaesport/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.twitch.tv/widaesport" target="_blank" rel="noopener noreferrer">Twitch</a>
+      <a href="https://www.tiktok.com/@widaesport" target="_blank" rel="noopener noreferrer">TikTok</a>
+      <a href="https://www.youtube.com/@widaesport" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://x.com/widaesport" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.com/invite/EbpBmBbVuz" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+
+    <div class="footer-column footer-center">
+      <h3>Menu</h3>
+
+      <a href="/">Home</a>
+      <a href="/teams">Teams</a>
+      <a href="/stats">Stats</a>
+      <a href="/news">News</a>
+      <a href="/about">About us</a>
+    </div>
+
+    <div class="footer-column footer-logos">
+      <h3>Leagues</h3>
+
+      <div class="league-grid">
+        <img src="/home/footer/eclpro.png" alt="ECL Pro" />
+        <img src="/home/footer/fcl.png" alt="FCL" />
+        <img src="/home/footer/eclcore.png" alt="ECL Core" />
+        <img src="/home/footer/ecllite.png" alt="ECL Lite" />
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 6rem;
+    padding: 4rem 8%;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(10px);
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .footer-logo-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-logo {
+    display: block;
+    width: 120px;
+    height: auto;
+  }
+
+  .sportsgamer-logo {
+    width: 160px;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    max-width: 1500px;
+    width: 100%;
+    margin: 0 auto;
+
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-column h3 {
+    color: #679540;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-column a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Michroma', sans-serif;
+    font-size: 1rem;
+    transition: 0.2s ease;
+  }
+
+  .footer-column a:hover {
+    color: #7caf4d;
+    transform: translateX(6px);
+  }
+
+  .footer-logos {
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .league-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(80px, 120px));
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .league-grid img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 800px) {
+    .site-footer {
+      width: 100%;
+      padding: 4rem 1.5rem;
+      overflow-x: hidden;
+    }
+
+    .footer-logo-row {
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-logo {
+      width: 90px;
+    }
+
+    .sportsgamer-logo {
+      width: 130px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+
+      gap: 3rem;
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-column {
+      width: 100%;
+      max-width: 300px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-logos {
+      padding-left: 0;
+    }
+
+    .league-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(80px, 100px));
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .league-grid img {
+      width: 100%;
+      max-width: 100px;
+    }
+  }
+</style>

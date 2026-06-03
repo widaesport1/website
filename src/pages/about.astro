@@ -1,0 +1,176 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About us | WIDA">
+  <main class="about-page">
+    <section class="about-hero">
+      <img src="/WIDAlogo.png" alt="WIDA logo" class="about-logo" />
+
+      <h1>About WIDA</h1>
+
+      <p>
+        WIDA is an ECL organization from Finland focused on building competitive teams,
+        a strong community, and a recognizable presence in the NHL esports scene.
+      </p>
+    </section>
+
+    <section class="about-card">
+      <h2>Who we are</h2>
+
+      <p>
+        WIDA is more than just a team. We are an organization built around players,
+        supporters, and people who want to be part of a growing esports community.
+      </p>
+
+      <p>
+        Our goal is to create an environment where players can develop, teams can compete,
+        and followers can easily stay connected with everything happening around WIDA.
+      </p>
+    </section>
+
+    <section class="about-grid">
+      <div class="about-box">
+        <h3>Competitive mindset</h3>
+        <p>
+          We aim to improve every season and represent WIDA with commitment and ambition.
+        </p>
+      </div>
+
+      <div class="about-box">
+        <h3>Community first</h3>
+        <p>
+          We want followers, players, and staff to feel connected to the organization.
+        </p>
+      </div>
+
+      <div class="about-box">
+        <h3>Long-term growth</h3>
+        <p>
+          WIDA is built with the goal of becoming stronger both on and off the ice.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .about-page {
+      min-height: 100vh;
+      padding: 6rem 2rem;
+    }
+
+    .about-hero {
+      max-width: 900px;
+      margin: 0 auto 5rem;
+      text-align: center;
+    }
+
+    .about-logo {
+      width: 140px;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-hero h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: 5px;
+      margin: 0 0 1rem;
+    }
+
+    .about-hero p {
+      max-width: 750px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    .about-card {
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+      padding: 4rem;
+      background: #242424;
+      border-radius: 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      text-align: center;
+    }
+
+    .about-card h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .about-card p {
+      max-width: 750px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    .about-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .about-box {
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 24px;
+      text-align: center;
+      border: 1px solid rgba(103,149,64,.35);
+    }
+
+    .about-box h3 {
+      color: #679540;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 0;
+    }
+
+    .about-box p {
+      line-height: 1.6;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 800px) {
+      .about-page {
+        padding: 4rem 1rem;
+      }
+
+      .about-logo {
+        width: 110px;
+      }
+
+      .about-hero {
+        margin-bottom: 3rem;
+      }
+
+      .about-hero h1 {
+        font-size: clamp(2.5rem, 14vw, 4rem);
+        letter-spacing: 2px;
+      }
+
+      .about-hero p {
+        font-size: 0.95rem;
+      }
+
+      .about-card {
+        padding: 3rem 1.5rem;
+        border-radius: 28px;
+      }
+
+      .about-card p {
+        font-size: 0.95rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Layout>

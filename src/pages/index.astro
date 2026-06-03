@@ -3,29 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="WIDA">
-  <div class="page-bg"></div>
-
   <section class="hero">
-    <button class="burger">&#9776;</button>
-
-    <nav class="navbar">
-      <a href="/">Home</a>
-
-      <button class="dropdown-toggle">
-        Teams <span class="dropdown-icon">+</span>
-      </button>
-
-      <div class="dropdown-menu">
-        <a href="/teams/pro">ECL Pro Team</a>
-        <a href="/teams/lite">ECL Lite Team</a>
-        <a href="/teams/core">ECL Core Team</a>
-      </div>
-
-      <a href="/stats">Stats</a>
-      <a href="/contact">Contact</a>
-      <a href="/about">About us</a>
-    </nav>
-
     <img src="/WIDAlogo.png" class="logo" alt="WIDA logo" />
 
     <h1>WIDA</h1>
@@ -124,47 +102,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <footer class="site-footer">
-    <div class="footer-logo-row">
-      <img src="/WIDAlogo.png" alt="WIDA logo" class="footer-logo" />
-      <img src="/home/footer/sportsgamer.png" alt="SportsGamer logo" class="footer-logo sportsgamer-logo" />
-    </div>
-
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Follow us</h3>
-
-        <a href="https://www.instagram.com/widaesport/">Instagram</a>
-        <a href="https://www.twitch.tv/widaesport">Twitch</a>
-        <a href="https://www.tiktok.com/@widaesport">TikTok</a>
-        <a href="https://www.youtube.com/@widaesport">YouTube</a>
-        <a href="https://x.com/widaesport">X</a>
-        <a href="https://discord.com/invite/EbpBmBbVuz">Discord</a>
-      </div>
-
-      <div class="footer-column footer-center">
-        <h3>Menu</h3>
-
-        <a href="/">Home</a>
-        <a href="/teams">Teams</a>
-        <a href="/stats">Stats</a>
-        <a href="/news">News</a>
-        <a href="/about">About us</a>
-      </div>
-
-      <div class="footer-column footer-logos">
-        <h3>Leagues</h3>
-
-        <div class="league-grid">
-          <img src="/home/footer/eclpro.png" alt="ECL Pro" />
-          <img src="/home/footer/fcl.png" alt="FCL" />
-          <img src="/home/footer/eclcore.png" alt="ECL Core" />
-          <img src="/home/footer/ecllite.png" alt="ECL Lite" />
-        </div>
-      </div>
-    </div>
-  </footer>
-
   <style>
     .social-icon {
       position: relative;
@@ -187,26 +124,6 @@ import Layout from '../layouts/Layout.astro';
       letter-spacing: 1px;
     }
 
-    .page-bg {
-      position: fixed;
-
-      top: -30%;
-      left: -10%;
-
-      width: 120%;
-      height: 160%;
-
-      background:
-        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-        url('/backgrounds/widabackground.png');
-
-      background-size: cover;
-      background-position: center;
-
-      z-index: -1;
-      will-change: transform;
-    }
-
     .hero {
       min-height: 100vh;
 
@@ -218,120 +135,6 @@ import Layout from '../layouts/Layout.astro';
       position: relative;
       padding: 2rem;
       text-align: center;
-    }
-
-    .burger {
-      position: fixed;
-      top: 2rem;
-      left: 2rem;
-
-      background: transparent;
-      border: none;
-
-      color: white;
-      font-size: 2rem;
-
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .navbar {
-      position: fixed;
-      z-index: 999;
-
-      top: 0;
-      left: 0;
-      bottom: 0;
-
-      height: 100vh;
-      width: 250px;
-
-      background: rgba(0,0,0,.9);
-
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-
-      padding-top: 6rem;
-
-      transform: translateX(-100%);
-      transition: transform .3s ease;
-    }
-
-    .navbar.open {
-      transform: translateX(0);
-    }
-
-    .navbar a,
-    .dropdown-toggle {
-      width: 100%;
-
-      color: white;
-      text-decoration: none;
-
-      padding: 1rem 2rem;
-
-      font-size: 1.2rem;
-
-      text-align: left;
-    }
-
-    .dropdown-toggle {
-      background: transparent;
-      border: none;
-
-      cursor: pointer;
-
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      gap: 0.5rem;
-    }
-
-    .dropdown-menu {
-      display: flex;
-      flex-direction: column;
-
-      width: 100%;
-
-      background: transparent;
-      max-height: 0;
-
-      opacity: 0;
-
-      overflow: hidden;
-
-      transform: translateY(-10px);
-
-      transition:
-        max-height 0.35s ease,
-        opacity 0.25s ease,
-        transform 0.35s ease;
-    }
-
-    .dropdown-menu a {
-      padding-left: 3rem;
-      font-size: 1rem;
-      opacity: 0.85;
-    }
-
-    .dropdown-menu.open {
-      max-height: 300px;
-
-      opacity: 1;
-
-      transform: translateY(0);
-    }
-
-    .dropdown-icon {
-      font-size: 0.9rem;
-
-      font-weight: 400;
-
-      opacity: 0.8;
-
-      transition: transform 0.2s ease;
     }
 
     .logo {
@@ -582,102 +385,12 @@ import Layout from '../layouts/Layout.astro';
       transform: translateX(0);
     }
 
-    .site-footer {
-      margin-top: 6rem;
-      padding: 4rem 8%;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
-      color: white;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .footer-logo-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .footer-logo {
-      display: block;
-      width: 120px;
-      height: auto;
-    }
-
-    .sportsgamer-logo {
-      width: 160px;
-    }
-
-    .footer-logos {
-      padding-left: 0;
-      align-items: center;
-      text-align: center;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      max-width: 1500px;
-      width: 100%;
-      margin: 0 auto;
-
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .footer-column {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-
-      align-items: center;
-      text-align: center;
-    }
-
-    .footer-column h3 {
-      color: #679540;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-column a {
-      color: white;
-      text-decoration: none;
-      font-family: 'Michroma', sans-serif;
-      font-size: 1rem;
-      transition: 0.2s ease;
-    }
-
-    .footer-column a:hover {
-      color: #7caf4d;
-      transform: translateX(6px);
-    }
-
-    .league-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(80px, 120px));
-      justify-content: center;
-      gap: 1.5rem;
-      width: 100%;
-    }
-
-    .league-grid img {
-      width: 100%;
-      max-width: 120px;
-      height: auto;
-      display: block;
-    }
-
     @media (max-width: 800px) {
       .hero {
         min-height: 0 !important;
         height: auto !important;
         justify-content: flex-start;
-        padding: 2rem 1rem 1rem;
+        padding: 5rem 1rem 1rem;
       }
 
       .logo {
@@ -798,58 +511,6 @@ import Layout from '../layouts/Layout.astro';
       .value-row p {
         font-size: 0.9rem;
       }
-
-      .site-footer {
-        width: 100%;
-        padding: 4rem 1.5rem;
-        overflow-x: hidden;
-      }
-
-      .footer-logo-row {
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-      }
-
-      .footer-logo {
-        width: 90px;
-      }
-
-      .sportsgamer-logo {
-        width: 130px;
-      }
-
-      .footer-content {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100%;
-        gap: 3rem;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .footer-column {
-        width: 100%;
-        max-width: 300px;
-        align-items: center;
-        text-align: center;
-      }
-
-      .footer-logos {
-        padding-left: 0;
-      }
-
-      .league-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(80px, 100px));
-        justify-content: center;
-        gap: 1.5rem;
-        width: 100%;
-      }
-
-      .league-grid img {
-        width: 100%;
-        max-width: 100px;
-      }
     }
   </style>
 
@@ -860,34 +521,6 @@ import Layout from '../layouts/Layout.astro';
 
     if (!twitchLive && liveBadge) {
       liveBadge.style.display = 'none';
-    }
-
-    const burger = document.querySelector('.burger');
-    const navbar = document.querySelector('.navbar');
-
-    if (burger && navbar) {
-      burger.addEventListener('click', () => {
-        navbar.classList.toggle('open');
-      });
-    }
-
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-
-    if (dropdownToggle && dropdownMenu) {
-      dropdownToggle.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('open');
-
-        const icon = dropdownToggle.querySelector('.dropdown-icon');
-
-        if (icon) {
-          if (dropdownMenu.classList.contains('open')) {
-            icon.textContent = '-';
-          } else {
-            icon.textContent = '+';
-          }
-        }
-      });
     }
 
     const slideElements = document.querySelectorAll('.slide-in');
@@ -904,17 +537,6 @@ import Layout from '../layouts/Layout.astro';
 
     slideElements.forEach((element) => {
       observer.observe(element);
-    });
-
-    const pageBg = document.querySelector('.page-bg') as HTMLElement;
-
-    window.addEventListener('scroll', () => {
-      if (pageBg) {
-        const scrollY = window.scrollY;
-
-        pageBg.style.transform =
-          `translateY(${-scrollY * 0.15}px)`;
-      }
     });
   </script>
 </Layout>
