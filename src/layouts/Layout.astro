@@ -1,9 +1,11 @@
 ---
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+import SiteLogo from '../components/SiteLogo.astro';
 import PageBackground from '../components/PageBackground.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+
 
 const { title = 'WIDA' } = Astro.props;
 ---
@@ -28,14 +30,15 @@ const { title = 'WIDA' } = Astro.props;
     <title>{title}</title>
   </head>
 
-  <body>
-    <PageBackground />
-    <Navbar />
+<body>
+  <PageBackground />
+  <Navbar />
+  <SiteLogo />
 
-    <slot />
+  <slot />
 
-    <Footer />
-  </body>
+  <Footer />
+</body>
 </html>
 
 <style is:global>

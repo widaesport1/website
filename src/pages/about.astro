@@ -5,7 +5,6 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="About us | WIDA">
   <main class="about-page">
     <section class="about-hero">
-      <img src="/WIDAlogo.png" alt="WIDA logo" class="about-logo" />
 
       <h1>About WIDA</h1>
 
@@ -28,6 +27,36 @@ import Layout from '../layouts/Layout.astro';
       <p> We are not here for a single season. We are here to build something that lasts.</p>
 
     </section>
+
+
+<section class="founders-section">
+  <h2>Meet our founders</h2>
+
+  <div class="founders-grid">
+    <div class="founder-card">
+      <img src="/about/founders/founders.jpg" alt="Founder portrait" />
+
+      <h3>Founder Name</h3>
+      <p>Founder & GM</p>
+    </div>
+
+    <div class="founder-card">
+      <img src="/about/founders/founders.jpg" alt="Founder portrait" />
+
+      <h3>Founder Name</h3>
+      <p>Video editor, AGM</p>
+    </div>
+
+    <div class="founder-card">
+      <img src="/about/founders/founders.jpg" alt="Founder portrait" />
+
+      <h3>Founder Name</h3>
+      <p>Co-Founder</p>
+    </div>
+  </div>
+</section>
+
+
 
     <section class="about-grid">
       <div class="about-box">
@@ -54,10 +83,10 @@ import Layout from '../layouts/Layout.astro';
   </main>
 
   <style>
-    .about-page {
-      min-height: 100vh;
-      padding: 6rem 2rem;
-    }
+.about-page {
+  min-height: 100vh;
+  padding: 11rem 2rem 6rem;
+}
 
     .about-hero {
       max-width: 900px;
@@ -83,6 +112,54 @@ import Layout from '../layouts/Layout.astro';
       line-height: 1.6;
       opacity: 0.85;
     }
+
+
+    .founders-section {
+  max-width: 1200px;
+  margin: 6rem auto;
+  text-align: center;
+}
+
+.founders-section h2 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  margin-bottom: 4rem;
+}
+
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.founder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.founder-card img {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.founder-card h3 {
+  color: white;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 0.4rem;
+}
+
+.founder-card p {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.9;
+}
 
     .about-card {
       max-width: 1000px;
@@ -148,9 +225,8 @@ import Layout from '../layouts/Layout.astro';
 
     @media (max-width: 800px) {
       .about-page {
-        padding: 4rem 1rem;
+        padding: 7rem 1rem 4rem;
       }
-
       .about-logo {
         width: 110px;
       }
@@ -167,6 +243,35 @@ import Layout from '../layouts/Layout.astro';
       .about-hero p {
         font-size: 0.95rem;
       }
+
+
+.founders-section {
+  margin: 4rem auto;
+}
+
+.founders-section h2 {
+  font-size: clamp(2.4rem, 11vw, 4rem);
+  margin-bottom: 3rem;
+}
+
+.founders-grid {
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.founder-card img {
+  width: 220px;
+  height: 220px;
+}
+
+.founder-card h3 {
+  font-size: 1.1rem;
+}
+
+.founder-card p {
+  font-size: 1rem;
+}
+
 
       .about-card {
         padding: 3rem 1.5rem;

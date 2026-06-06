@@ -1,0 +1,42 @@
+<a href="/" class="site-logo-link" aria-label="Go to homepage">
+  <img src="/WIDAlogo.png" alt="WIDA logo" class="site-logo" />
+</a>
+
+<style>
+  .site-logo-link {
+    position: absolute;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 900;
+
+    display: block;
+    text-decoration: none;
+  }
+
+  .site-logo {
+    width: 150px;
+    height: auto;
+    display: block;
+
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .site-logo-link:hover .site-logo {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 800px) {
+    .site-logo-link {
+      top: 0.8rem;
+    }
+
+    .site-logo {
+      width: 70px;
+    }
+  }
+</style>
