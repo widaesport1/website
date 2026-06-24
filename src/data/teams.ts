@@ -1,0 +1,48 @@
+export const teams = [
+  {
+    slug: 'wida',
+    name: 'Wida',
+    division: 'ECL Pro',
+    description: 'WIDA main roster competing in ECL Pro.',
+    players: [
+      {
+        name: 'Player One',
+        gamertag: 'PlayerGT',
+        position: 'C',
+        number: 91,
+        image: '/teams/players/player-placeholder.png',
+        games: 16,
+        goals: 8,
+        assists: 12,
+        points: 20,
+        plusMinus: 6,
+      },
+      {
+        name: 'Player Two',
+        gamertag: 'PlayerGT2',
+        position: 'LW',
+        number: 27,
+        image: '/teams/players/player-placeholder.png',
+        games: 16,
+        goals: 6,
+        assists: 10,
+        points: 16,
+        plusMinus: 3,
+      },
+    ],
+  },
+  {
+    slug: 'wigor',
+    name: 'Wigor',
+    division: 'ECL Core',
+    description: 'Wigor roster competing in ECL Core.',
+    players: [],
+  },
+  {
+    slug: 'wibe',
+    name: 'Wibe',
+    division: 'ECL Lite',
+    description: 'Wibe roster competing in ECL Lite.',
+    players: [],
+  },
+];

@@ -1,0 +1,404 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { teams } from '../../data/teams.ts';
+
+export function getStaticPaths() {
+  return teams.map((team) => ({
+    params: { team: team.slug },
+    props: { team },
+  }));
+}
+
+const { team } = Astro.props;
+---
+
+<Layout title={`${team.name} | WIDA`}>
+  <main class="team-page">
+    <section class="team-hero">
+      <p class="team-label">{team.division}</p>
+      <h1>{team.name}</h1>
+      <p>{team.description}</p>
+    </section>
+
+    <section class="roster-section">
+      <h2>Roster</h2>
+
+      {team.players.length > 0 ? (
+        <div class="players-grid">
+          {team.players.map((player) => (
+            <button
+              type="button"
+              class="player-card"
+              data-name={player.name}
+              data-gamertag={player.gamertag}
+              data-position={player.position}
+              data-number={player.number}
+              data-image={player.image}
+              data-games={player.games}
+              data-goals={player.goals}
+              data-assists={player.assists}
+              data-points={player.points}
+              data-plusminus={player.plusMinus}
+            >
+              <img src={player.image} alt={`${player.name} portrait`} />
+
+              <div class="player-info">
+                <span>#{player.number} · {player.position}</span>
+                <h3>{player.gamertag}</h3>
+                <p>{player.name}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p class="empty-roster">Roster coming soon.</p>
+      )}
+    </section>
+
+    <dialog class="player-modal">
+      <div class="modal-content">
+        <button type="button" class="modal-close" aria-label="Close player card">
+          ×
+        </button>
+
+        <img class="modal-image" src="" alt="" />
+
+        <p class="modal-number"></p>
+        <h2 class="modal-gamertag"></h2>
+        <p class="modal-name"></p>
+
+        <div class="modal-stats">
+          <div>
+            <span class="stat-value modal-games"></span>
+            <span class="stat-label">Games</span>
+          </div>
+
+          <div>
+            <span class="stat-value modal-goals"></span>
+            <span class="stat-label">Goals</span>
+          </div>
+
+          <div>
+            <span class="stat-value modal-assists"></span>
+            <span class="stat-label">Assists</span>
+          </div>
+
+          <div>
+            <span class="stat-value modal-points"></span>
+            <span class="stat-label">Points</span>
+          </div>
+
+          <div>
+            <span class="stat-value modal-plusminus"></span>
+            <span class="stat-label">+/-</span>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </main>
+
+  <style>
+    .team-page {
+      min-height: 100vh;
+      padding: 12rem 2rem 6rem;
+    }
+
+    .team-hero {
+      max-width: 1000px;
+      margin: 0 auto 5rem;
+      text-align: center;
+    }
+
+    .team-label {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin: 0 0 1rem;
+    }
+
+    .team-hero h1 {
+      font-size: clamp(4rem, 9vw, 9rem);
+      letter-spacing: 5px;
+      line-height: 1.05;
+      margin: 0 0 2rem;
+    }
+
+    .team-hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    .roster-section {
+      max-width: 1300px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .roster-section h2 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      margin: 0 0 4rem;
+    }
+
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .player-card {
+      background: #242424;
+      color: white;
+
+      border: 1px solid rgba(103,149,64,.25);
+      border-radius: 34px;
+
+      padding: 2rem;
+      cursor: pointer;
+
+      text-align: center;
+
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .player-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(103,149,64,.7);
+      box-shadow: 0 25px 60px rgba(0,0,0,.5);
+    }
+
+    .player-card img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(103,149,64,.35);
+    }
+
+    .player-info span {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+    }
+
+    .player-info h3 {
+      font-size: 1.5rem;
+      margin: 0.8rem 0 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .player-info p {
+      margin: 0;
+      opacity: 0.8;
+    }
+
+    .empty-roster {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .player-modal {
+      width: min(92vw, 600px);
+      padding: 0;
+      border: none;
+      border-radius: 36px;
+      background: transparent;
+      color: white;
+    }
+
+    .player-modal::backdrop {
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      position: relative;
+      padding: 3rem 2rem;
+      background: #242424;
+      border: 1px solid rgba(103,149,64,.4);
+      border-radius: 36px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+
+      background: transparent;
+      border: none;
+
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    .modal-image {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(103,149,64,.45);
+    }
+
+    .modal-number {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      letter-spacing: 2px;
+      margin: 0 0 0.8rem;
+    }
+
+    .modal-gamertag {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin: 0 0 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .modal-name {
+      margin: 0 0 2.5rem;
+      opacity: 0.8;
+    }
+
+    .modal-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+
+    .modal-stats div {
+      padding: 1rem 0.5rem;
+      background: rgba(0,0,0,.35);
+      border-radius: 18px;
+    }
+
+    .stat-value {
+      display: block;
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 1000px) {
+      .players-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .team-page {
+        padding: 8rem 1rem 4rem;
+      }
+
+      .team-hero {
+        margin-bottom: 3rem;
+      }
+
+      .team-hero h1 {
+        font-size: clamp(3rem, 15vw, 4.8rem);
+        letter-spacing: 2px;
+      }
+
+      .team-hero p {
+        font-size: 0.95rem;
+      }
+
+      .players-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .player-card {
+        padding: 2rem 1.5rem;
+        border-radius: 28px;
+      }
+
+      .player-card img {
+        width: 190px;
+        height: 190px;
+      }
+
+      .modal-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+
+  <script>
+    const modal = document.querySelector('.player-modal') as HTMLDialogElement | null;
+    const playerCards = document.querySelectorAll('.player-card');
+    const closeButton = document.querySelector('.modal-close');
+
+    const modalImage = document.querySelector('.modal-image') as HTMLImageElement | null;
+    const modalNumber = document.querySelector('.modal-number');
+    const modalGamertag = document.querySelector('.modal-gamertag');
+    const modalName = document.querySelector('.modal-name');
+
+    const modalGames = document.querySelector('.modal-games');
+    const modalGoals = document.querySelector('.modal-goals');
+    const modalAssists = document.querySelector('.modal-assists');
+    const modalPoints = document.querySelector('.modal-points');
+    const modalPlusMinus = document.querySelector('.modal-plusminus');
+
+    playerCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        if (!modal) return;
+
+        const player = card as HTMLElement;
+
+        if (modalImage) {
+          modalImage.src = player.dataset.image || '';
+          modalImage.alt = `${player.dataset.name} portrait`;
+        }
+
+        if (modalNumber) {
+          modalNumber.textContent = `#${player.dataset.number} · ${player.dataset.position}`;
+        }
+
+        if (modalGamertag) {
+          modalGamertag.textContent = player.dataset.gamertag || '';
+        }
+
+        if (modalName) {
+          modalName.textContent = player.dataset.name || '';
+        }
+
+        if (modalGames) modalGames.textContent = player.dataset.games || '0';
+        if (modalGoals) modalGoals.textContent = player.dataset.goals || '0';
+        if (modalAssists) modalAssists.textContent = player.dataset.assists || '0';
+        if (modalPoints) modalPoints.textContent = player.dataset.points || '0';
+        if (modalPlusMinus) modalPlusMinus.textContent = player.dataset.plusminus || '0';
+
+        modal.showModal();
+      });
+    });
+
+    if (closeButton && modal) {
+      closeButton.addEventListener('click', () => {
+        modal.close();
+      });
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.close();
+        }
+      });
+    }
+  </script>
+</Layout>
