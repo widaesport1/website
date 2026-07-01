@@ -9,7 +9,11 @@ export function getStaticPaths() {
   }));
 }
 
-const { team } = Astro.props;
+const { team } = Astro.props as { team: any };
+
+const getPositionClass = (position: string) => {
+  return `player-position-${position.toLowerCase()}`;
+};
 ---
 
 <Layout title={`${team.name} | WIDA`}>
@@ -25,10 +29,10 @@ const { team } = Astro.props;
 
       {team.players.length > 0 ? (
         <div class="players-grid">
-          {team.players.map((player) => (
+          {team.players.map((player: any) => (
             <button
               type="button"
-              class="player-card"
+              class={`player-card ${getPositionClass(player.position)}`}
               data-name={player.name}
               data-gamertag={player.gamertag}
               data-position={player.position}
@@ -39,6 +43,11 @@ const { team } = Astro.props;
               data-assists={player.assists}
               data-points={player.points}
               data-plusminus={player.plusMinus}
+              data-saves={player.saves}
+              data-shotsagainst={player.shotsAgainst}
+              data-goalsagainst={player.goalsAgainst}
+              data-savepercentage={player.savePercentage}
+              data-shutouts={player.shutouts}
             >
               <img src={player.image} alt={`${player.name} portrait`} />
 
@@ -67,33 +76,35 @@ const { team } = Astro.props;
         <h2 class="modal-gamertag"></h2>
         <p class="modal-name"></p>
 
+        <p class="stats-season-label">Current season</p>
+
         <div class="modal-stats">
           <div>
-            <span class="stat-value modal-games"></span>
-            <span class="stat-label">Games</span>
+            <span class="stat-value modal-stat-1"></span>
+            <span class="stat-label modal-label-1"></span>
           </div>
 
           <div>
-            <span class="stat-value modal-goals"></span>
-            <span class="stat-label">Goals</span>
+            <span class="stat-value modal-stat-2"></span>
+            <span class="stat-label modal-label-2"></span>
           </div>
 
           <div>
-            <span class="stat-value modal-assists"></span>
-            <span class="stat-label">Assists</span>
+            <span class="stat-value modal-stat-3"></span>
+            <span class="stat-label modal-label-3"></span>
           </div>
 
           <div>
-            <span class="stat-value modal-points"></span>
-            <span class="stat-label">Points</span>
+            <span class="stat-value modal-stat-4"></span>
+            <span class="stat-label modal-label-4"></span>
           </div>
 
           <div>
-            <span class="stat-value modal-plusminus"></span>
-            <span class="stat-label">+/-</span>
+            <span class="stat-value modal-stat-5"></span>
+            <span class="stat-label modal-label-5"></span>
           </div>
         </div>
-      </div>
+        </div>
     </dialog>
   </main>
 
@@ -133,7 +144,7 @@ const { team } = Astro.props;
     }
 
     .roster-section {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 0 auto;
       text-align: center;
     }
@@ -145,15 +156,31 @@ const { team } = Astro.props;
 
     .players-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-areas:
+        "lw lw c c rw rw"
+        ". lb lb rb rb ."
+        ". . gk gk . .";
+
       gap: 2rem;
+
+      padding: 4rem 3rem;
+
+      background:
+        linear-gradient(to bottom, rgba(103,149,64,.18), transparent 45%),
+        rgba(36,36,36,.92);
+
+      border: 1px solid rgba(103,149,64,.3);
+      border-radius: 40px;
+
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
     }
 
     .player-card {
-      background: #242424;
+      background: rgba(0,0,0,.45);
       color: white;
 
-      border: 1px solid rgba(103,149,64,.25);
+      border: 1px solid rgba(103,149,64,.45);
       border-radius: 34px;
 
       padding: 2rem;
@@ -165,14 +192,40 @@ const { team } = Astro.props;
 
       transition:
         transform 0.25s ease,
+        background 0.25s ease,
         border-color 0.25s ease,
         box-shadow 0.25s ease;
     }
 
     .player-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(103,149,64,.7);
-      box-shadow: 0 25px 60px rgba(0,0,0,.5);
+      background: rgba(0,0,0,.65);
+      border-color: rgba(103,149,64,.85);
+      box-shadow: 0 0 28px rgba(103,149,64,.35);
+    }
+
+    .player-position-lw {
+      grid-area: lw;
+    }
+
+    .player-position-c {
+      grid-area: c;
+    }
+
+    .player-position-rw {
+      grid-area: rw;
+    }
+
+    .player-position-lb {
+      grid-area: lb;
+    }
+
+    .player-position-rb {
+      grid-area: rb;
+    }
+
+    .player-position-gk {
+      grid-area: gk;
     }
 
     .player-card img {
@@ -271,6 +324,18 @@ const { team } = Astro.props;
       opacity: 0.8;
     }
 
+
+    .stats-season-label {
+      color: white;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      margin: -1.2rem 0 1.5rem;
+      opacity: 0.95;
+    }
+
     .modal-stats {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -298,7 +363,12 @@ const { team } = Astro.props;
 
     @media (max-width: 1000px) {
       .players-grid {
-        grid-template-columns: repeat(2, 1fr);
+        padding: 3rem 2rem;
+      }
+
+      .player-card img {
+        width: 180px;
+        height: 180px;
       }
     }
 
@@ -320,8 +390,24 @@ const { team } = Astro.props;
         font-size: 0.95rem;
       }
 
+      .roster-section h2 {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+        margin-bottom: 3rem;
+      }
+
       .players-grid {
         grid-template-columns: 1fr;
+        grid-template-areas:
+          "lw"
+          "c"
+          "rw"
+          "lb"
+          "rb"
+          "gk";
+
+        padding: 2rem 1rem;
+        gap: 1rem;
+        border-radius: 28px;
       }
 
       .player-card {
@@ -350,12 +436,28 @@ const { team } = Astro.props;
     const modalGamertag = document.querySelector('.modal-gamertag');
     const modalName = document.querySelector('.modal-name');
 
-    const modalGames = document.querySelector('.modal-games');
-    const modalGoals = document.querySelector('.modal-goals');
-    const modalAssists = document.querySelector('.modal-assists');
-    const modalPoints = document.querySelector('.modal-points');
-    const modalPlusMinus = document.querySelector('.modal-plusminus');
-
+    const modalStats = [
+      {
+        value: document.querySelector('.modal-stat-1'),
+        label: document.querySelector('.modal-label-1'),
+      },
+      {
+        value: document.querySelector('.modal-stat-2'),
+        label: document.querySelector('.modal-label-2'),
+      },
+      {
+        value: document.querySelector('.modal-stat-3'),
+        label: document.querySelector('.modal-label-3'),
+      },
+      {
+        value: document.querySelector('.modal-stat-4'),
+        label: document.querySelector('.modal-label-4'),
+      },
+      {
+        value: document.querySelector('.modal-stat-5'),
+        label: document.querySelector('.modal-label-5'),
+      },
+    ];
     playerCards.forEach((card) => {
       card.addEventListener('click', () => {
         if (!modal) return;
@@ -379,11 +481,35 @@ const { team } = Astro.props;
           modalName.textContent = player.dataset.name || '';
         }
 
-        if (modalGames) modalGames.textContent = player.dataset.games || '0';
-        if (modalGoals) modalGoals.textContent = player.dataset.goals || '0';
-        if (modalAssists) modalAssists.textContent = player.dataset.assists || '0';
-        if (modalPoints) modalPoints.textContent = player.dataset.points || '0';
-        if (modalPlusMinus) modalPlusMinus.textContent = player.dataset.plusminus || '0';
+          const isGoalkeeper = player.dataset.position === 'GK';
+
+          const stats = isGoalkeeper
+            ? [
+                { label: 'Games', value: player.dataset.games || '0' },
+                { label: 'Saves', value: player.dataset.saves || '0' },
+                { label: 'Shots Against', value: player.dataset.shotsagainst || '0' },
+                { label: 'Save %', value: player.dataset.savepercentage || '0' },
+                { label: 'Shutouts', value: player.dataset.shutouts || '0' },
+              ]
+            : [
+                { label: 'Games', value: player.dataset.games || '0' },
+                { label: 'Goals', value: player.dataset.goals || '0' },
+                { label: 'Assists', value: player.dataset.assists || '0' },
+                { label: 'Points', value: player.dataset.points || '0' },
+                { label: '+/-', value: player.dataset.plusminus || '0' },
+              ];
+
+          modalStats.forEach((statElement, index) => {
+            const stat = stats[index];
+
+            if (statElement.value) {
+              statElement.value.textContent = stat.value;
+            }
+
+            if (statElement.label) {
+              statElement.label.textContent = stat.label;
+            }
+          });
 
         modal.showModal();
       });
