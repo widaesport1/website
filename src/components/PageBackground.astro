@@ -3,10 +3,8 @@
 <style>
   .page-bg {
     position: fixed;
-
     top: -30%;
     left: -10%;
-
     width: 120%;
     height: 160%;
 
@@ -16,22 +14,48 @@
 
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 
     z-index: -1;
     will-change: transform;
     pointer-events: none;
   }
+
+  @media (max-width: 800px) {
+    .page-bg {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+
+      background-size: cover;
+      background-position: center;
+      transform: none !important;
+      will-change: auto;
+    }
+  }
 </style>
 
 <script>
-  const pageBg = document.querySelector('.page-bg') as HTMLElement;
+  const pageBg = document.querySelector('.page-bg') as HTMLElement | null;
+  const desktopQuery = window.matchMedia('(min-width: 801px)');
 
-  window.addEventListener('scroll', () => {
-    if (pageBg) {
-      const scrollY = window.scrollY;
+  const updateBackground = () => {
+    if (!pageBg) return;
 
-      pageBg.style.transform =
-        `translateY(${-scrollY * 0.15}px)`;
+    if (!desktopQuery.matches) {
+      pageBg.style.transform = 'none';
+      return;
     }
-  });
+
+    const scrollY = window.scrollY;
+
+    pageBg.style.transform =
+      `translateY(${-scrollY * 0.15}px)`;
+  };
+
+  window.addEventListener('scroll', updateBackground);
+  window.addEventListener('resize', updateBackground);
+
+  updateBackground();
 </script>
