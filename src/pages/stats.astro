@@ -1,14 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { statGroups } from '../data/stats';
-
-const getNavLabel = (label: string) => {
-  if (label === 'Organization') {
-    return 'ORG';
-  }
-
-  return label;
-};
 ---
 
 <Layout title="Stats | WIDA">
@@ -21,145 +12,39 @@ const getNavLabel = (label: string) => {
       </p>
 
       <div class="stats-jump">
-        <p>Go to:</p>
+        <p>Go to</p>
 
         <nav class="stats-nav" aria-label="Stats sections">
-          {statGroups.map((group) => (
-            <a href={`#${group.id}`}>{getNavLabel(group.label)}</a>
-          ))}
+          <a href="#organization">ORG</a>
+          <a href="#wida">WIDA</a>
+          <a href="#wigor">WIGOR</a>
+          <a href="#wibe">WIBE</a>
         </nav>
       </div>
     </section>
 
-    <div class="stats-sections">
-      {statGroups.map((group) => (
-        <section class="stats-group" id={group.id}>
-          <div class="section-heading">
-            <p>{group.label}</p>
-            <h2>{group.title}</h2>
-            <span>{group.description}</span>
-          </div>
-
-          <div class="tables-grid">
-            <article class="table-card">
-              <div class="table-title">
-                <div>
-                  <p>Players</p>
-                  <h3>Point leaders</h3>
-                </div>
-
-                <span>All-time</span>
-              </div>
-
-              {group.players.length > 0 ? (
-                <div class="table-scroll">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Player</th>
-                        <th>Seasons</th>
-                        <th>Games</th>
-                        <th>Goals</th>
-                        <th>Assists</th>
-                        <th>Points</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {group.players.map((player) => (
-                        <tr>
-                          <td class="rank-cell">{player.rank}</td>
-
-                          <td class="player-cell">
-                            <strong>{player.player}</strong>
-                            <span>{player.gamertag}</span>
-                          </td>
-
-                          <td>{player.seasons}</td>
-                          <td>{player.games}</td>
-                          <td>{player.goals}</td>
-                          <td>{player.assists}</td>
-                          <td class="highlight-cell">{player.points}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <p class="empty-table">Player stats coming soon.</p>
-              )}
-            </article>
-
-            <article class="table-card">
-              <div class="table-title">
-                <div>
-                  <p>Goalkeepers</p>
-                  <h3>Goalie leaders</h3>
-                </div>
-
-                <span>All-time</span>
-              </div>
-
-              {group.goalies.length > 0 ? (
-                <div class="table-scroll">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Player</th>
-                        <th>Seasons</th>
-                        <th>Games</th>
-                        <th>Wins</th>
-                        <th>Losses</th>
-                        <th>Saves</th>
-                        <th>Save %</th>
-                        <th>SO</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {group.goalies.map((goalie) => (
-                        <tr>
-                          <td class="rank-cell">{goalie.rank}</td>
-
-                          <td class="player-cell">
-                            <strong>{goalie.player}</strong>
-                            <span>{goalie.gamertag}</span>
-                          </td>
-
-                          <td>{goalie.seasons}</td>
-                          <td>{goalie.games}</td>
-                          <td>{goalie.wins}</td>
-                          <td>{goalie.losses}</td>
-                          <td class="highlight-cell">{goalie.saves}</td>
-                          <td>{goalie.savePercentage}%</td>
-                          <td>{goalie.shutouts}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <p class="empty-table">Goalkeeper stats coming soon.</p>
-              )}
-            </article>
-          </div>
-        </section>
-      ))}
+    <div class="stats-sections" data-stats-sections>
+      <p class="loading-message">Loading stats...</p>
     </div>
   </main>
 
-  <style>
+  <style is:global>
     .stats-page {
       min-height: 100vh;
       padding: 12rem 2rem 6rem;
     }
 
     .stats-hero {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto 7rem;
       text-align: center;
+
+      padding: 3rem 2rem;
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(103,149,64,.22);
+      border-radius: 36px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.28);
     }
 
     .stats-hero h1 {
@@ -174,6 +59,8 @@ const getNavLabel = (label: string) => {
       margin: 0 auto 3rem;
       font-size: 1.15rem;
       line-height: 1.7;
+      color: rgba(255,255,255,.95);
+      text-shadow: 0 2px 12px rgba(0,0,0,.65);
     }
 
     .stats-jump {
@@ -181,7 +68,7 @@ const getNavLabel = (label: string) => {
     }
 
     .stats-jump p {
-      color: white;
+      color: #679540;
       font-family: 'Michroma', sans-serif;
       font-size: 0.75rem;
       letter-spacing: 2px;
@@ -219,7 +106,7 @@ const getNavLabel = (label: string) => {
     .stats-nav a:hover {
       background: rgba(103,149,64,.18);
       border-color: rgba(103,149,64,.8);
-
+      transform: translateY(-2px);
     }
 
     .stats-sections {
@@ -235,6 +122,12 @@ const getNavLabel = (label: string) => {
     .section-heading {
       margin-bottom: 2rem;
       text-align: left;
+
+      padding: 1.5rem 1.7rem;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(103,149,64,.18);
+      border-radius: 26px;
+      backdrop-filter: blur(6px);
     }
 
     .section-heading p {
@@ -255,7 +148,9 @@ const getNavLabel = (label: string) => {
     .section-heading span {
       display: block;
       max-width: 700px;
+      color: rgba(255,255,255,.92);
       line-height: 1.6;
+      text-shadow: 0 2px 12px rgba(0,0,0,.6);
     }
 
     .tables-grid {
@@ -300,6 +195,7 @@ const getNavLabel = (label: string) => {
     .table-title > span {
       white-space: nowrap;
       color: white;
+      opacity: 0.75;
       font-size: 0.9rem;
     }
 
@@ -310,7 +206,7 @@ const getNavLabel = (label: string) => {
 
     table {
       width: 100%;
-      min-width: 850px;
+      min-width: 800px;
       border-collapse: collapse;
     }
 
@@ -342,32 +238,32 @@ const getNavLabel = (label: string) => {
       border-bottom: none;
     }
 
-    .rank-cell {
-      color: #679540;
-      font-family: 'Michroma', sans-serif;
-      font-weight: 700;
-    }
-
     .player-cell {
       text-align: left;
-      min-width: 230px;
+      min-width: 220px;
     }
 
-    .player-cell strong {
-      display: block;
-      margin-bottom: 0.25rem;
+    .team-cell {
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.9;
     }
 
-    .player-cell span {
-      display: block;
-      font-size: 0.9rem;
-    }
-
-
-    .empty-table {
+    .empty-table,
+    .loading-message,
+    .error-message {
       padding: 2rem;
       margin: 0;
-      opacity: 0.75;
+      text-align: center;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(103,149,64,.18);
+      border-radius: 24px;
+    }
+
+    .error-message {
+      border-color: rgba(255,80,80,.35);
     }
 
     @media (max-width: 900px) {
@@ -387,6 +283,8 @@ const getNavLabel = (label: string) => {
 
       .stats-hero {
         margin-bottom: 4rem;
+        padding: 2.2rem 1rem;
+        border-radius: 28px;
       }
 
       .stats-hero h1 {
@@ -431,4 +329,214 @@ const getNavLabel = (label: string) => {
       }
     }
   </style>
+
+  <script>
+    type PlayerStat = {
+      team: string;
+      player: string;
+      games: number;
+      goals: number;
+      assists: number;
+      points: number;
+    };
+
+    type GoalieStat = {
+      team: string;
+      player: string;
+      games: number;
+      saves: number;
+      pm: number;
+      ly: number;
+      savePercentage: number;
+      gaa: number;
+    };
+
+    type StatGroup = {
+      id: string;
+      label: string;
+      title: string;
+      description: string;
+      players: PlayerStat[];
+      goalies: GoalieStat[];
+    };
+
+    const statsContainer = document.querySelector('[data-stats-sections]');
+
+    const escapeHtml = (value: unknown) => {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    };
+
+    const formatTeam = (team: string) => {
+      if (team === 'wida') return 'Wida';
+      if (team === 'wigor') return 'Wigor';
+      if (team === 'wibe') return 'Wibe';
+
+      return team;
+    };
+
+    const formatNumber = (value: number) => {
+      return Number.isFinite(value) ? String(value).replace('.', ',') : '0';
+    };
+
+    const renderPlayerRows = (players: PlayerStat[]) => {
+      if (players.length === 0) {
+        return `<p class="empty-table">Player stats coming soon.</p>`;
+      }
+
+      return `
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Player</th>
+                <th>Games</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              ${players
+                .map(
+                  (player) => `
+                    <tr>
+                      <td class="team-cell">${escapeHtml(formatTeam(player.team))}</td>
+                      <td class="player-cell">${escapeHtml(player.player)}</td>
+                      <td>${formatNumber(player.games)}</td>
+                      <td>${formatNumber(player.goals)}</td>
+                      <td>${formatNumber(player.assists)}</td>
+                      <td>${formatNumber(player.points)}</td>
+                    </tr>
+                  `
+                )
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    };
+
+    const renderGoalieRows = (goalies: GoalieStat[]) => {
+      if (goalies.length === 0) {
+        return `<p class="empty-table">Goalkeeper stats coming soon.</p>`;
+      }
+
+      return `
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Goalkeeper</th>
+                <th>Games</th>
+                <th>Saves</th>
+                <th>PM</th>
+                <th>LY</th>
+                <th>S%</th>
+                <th>GAA</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              ${goalies
+                .map(
+                  (goalie) => `
+                    <tr>
+                      <td class="team-cell">${escapeHtml(formatTeam(goalie.team))}</td>
+                      <td class="player-cell">${escapeHtml(goalie.player)}</td>
+                      <td>${formatNumber(goalie.games)}</td>
+                      <td>${formatNumber(goalie.saves)}</td>
+                      <td>${formatNumber(goalie.pm)}</td>
+                      <td>${formatNumber(goalie.ly)}</td>
+                      <td>${formatNumber(goalie.savePercentage)}%</td>
+                      <td>${formatNumber(goalie.gaa)}</td>
+                    </tr>
+                  `
+                )
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    };
+
+    const renderStats = (groups: StatGroup[]) => {
+      if (!statsContainer) return;
+
+      statsContainer.innerHTML = groups
+        .map(
+          (group) => `
+            <section class="stats-group" id="${escapeHtml(group.id)}">
+              <div class="section-heading">
+                <p>${escapeHtml(group.label)}</p>
+                <h2>${escapeHtml(group.title)}</h2>
+                <span>${escapeHtml(group.description)}</span>
+              </div>
+
+              <div class="tables-grid">
+                <article class="table-card">
+                  <div class="table-title">
+                    <div>
+                      <p>Players</p>
+                      <h3>Point leaders</h3>
+                    </div>
+
+                    <span>ECL</span>
+                  </div>
+
+                  ${renderPlayerRows(group.players)}
+                </article>
+
+                <article class="table-card">
+                  <div class="table-title">
+                    <div>
+                      <p>Goalkeepers</p>
+                      <h3>Goalie stats</h3>
+                    </div>
+
+                    <span>ECL</span>
+                  </div>
+
+                  ${renderGoalieRows(group.goalies)}
+                </article>
+              </div>
+            </section>
+          `
+        )
+        .join('');
+    };
+
+    const loadStats = async () => {
+      if (!statsContainer) return;
+
+      try {
+        const response = await fetch('/api/stats', {
+        cache: 'no-store',
+});
+
+        if (!response.ok) {
+          throw new Error('Could not load stats.');
+        }
+
+        const data = await response.json();
+
+        renderStats(data.statGroups);
+      } catch (error) {
+        statsContainer.innerHTML = `
+          <p class="error-message">
+            Could not load stats. Check the Google Sheet connection.
+          </p>
+        `;
+      }
+    };
+
+    loadStats();
+  </script>
 </Layout>

@@ -91,10 +91,24 @@ const fetchSheetRange = async (range: string) => {
   return data.values ?? [];
 };
 
+const isGoalieHeaderRow = (row: string[]) => {
+  const gamesHeader = String(row[2] ?? '').trim().toLowerCase();
+  const savesHeader = String(row[3] ?? '').trim().toLowerCase();
+
+  return gamesHeader === 'ottelut' && savesHeader === 'saves';
+};
+
+const hasPlayerName = (row: string[]) => {
+  return Boolean(String(row[1] ?? '').trim());
+};
+
 const parsePlayerStats = (rows: string[][]): PlayerStat[] => {
-  return rows
-    .slice(1)
-    .filter((row) => row[0] && row[1])
+  const goalieHeaderIndex = rows.findIndex(isGoalieHeaderRow);
+  const playerRows =
+    goalieHeaderIndex >= 0 ? rows.slice(1, goalieHeaderIndex) : rows.slice(1, 25);
+
+  return playerRows
+    .filter((row) => row[0] && hasPlayerName(row))
     .map((row) => ({
       team: normalizeTeam(row[0]),
       player: row[1] ?? '',
@@ -106,9 +120,15 @@ const parsePlayerStats = (rows: string[][]): PlayerStat[] => {
 };
 
 const parseGoalieStats = (rows: string[][]): GoalieStat[] => {
+  const goalieHeaderIndex = rows.findIndex(isGoalieHeaderRow);
+
+  if (goalieHeaderIndex < 0) {
+    return [];
+  }
+
   return rows
-    .slice(1)
-    .filter((row) => row[0] && row[1])
+    .slice(goalieHeaderIndex + 1)
+    .filter((row) => row[0] && hasPlayerName(row))
     .map((row) => ({
       team: normalizeTeam(row[0]),
       player: row[1] ?? '',
@@ -125,6 +145,7 @@ const sortPlayers = (players: PlayerStat[]) => {
   return [...players].sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
     if (b.goals !== a.goals) return b.goals - a.goals;
+
     return b.games - a.games;
   });
 };
@@ -133,19 +154,17 @@ const sortGoalies = (goalies: GoalieStat[]) => {
   return [...goalies].sort((a, b) => {
     if (b.games !== a.games) return b.games - a.games;
     if (b.saves !== a.saves) return b.saves - a.saves;
+
     return b.savePercentage - a.savePercentage;
   });
 };
 
 export const GET: APIRoute = async () => {
   try {
-    const [playerRows, goalieRows] = await Promise.all([
-      fetchSheetRange("'ECL'!A1:F24"),
-      fetchSheetRange("'ECL'!A26:H34"),
-    ]);
+    const eclRows = await fetchSheetRange("'ECL'!A1:H40");
 
-    const players = parsePlayerStats(playerRows);
-    const goalies = parseGoalieStats(goalieRows);
+    const players = parsePlayerStats(eclRows);
+    const goalies = parseGoalieStats(eclRows);
 
     const statGroups = teamSections.map((section) => {
       if (section.id === 'organization') {
@@ -172,7 +191,7 @@ export const GET: APIRoute = async () => {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=300',
+          'Cache-Control': 'no-store',
         },
       }
     );

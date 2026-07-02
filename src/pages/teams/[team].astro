@@ -10,365 +10,496 @@ export function getStaticPaths() {
 }
 
 const { team } = Astro.props as { team: any };
-
-const getPositionClass = (position: string) => {
-  return `player-position-${position.toLowerCase()}`;
-};
 ---
 
 <Layout title={`${team.name} | WIDA`}>
-  <main class="team-page">
+  <main class="team-page" data-team-page={team.slug}>
     <section class="team-hero">
-      <p class="team-label">{team.division}</p>
+      <p class="eyebrow">{team.division}</p>
       <h1>{team.name}</h1>
       <p>{team.description}</p>
     </section>
 
     <section class="roster-section">
-      <h2>Roster</h2>
+      <div class="section-heading">
+        <p>Roster</p>
+        <h2>{team.name} players</h2>
+        <span>Current roster and current-season stats.</span>
+      </div>
 
-      {team.players.length > 0 ? (
-        <div class="players-grid">
-          {team.players.map((player: any) => (
-            <button
-              type="button"
-              class={`player-card ${getPositionClass(player.position)}`}
-              data-name={player.name}
-              data-gamertag={player.gamertag}
-              data-position={player.position}
-              data-number={player.number}
-              data-image={player.image}
-              data-games={player.games}
-              data-goals={player.goals}
-              data-assists={player.assists}
-              data-points={player.points}
-              data-plusminus={player.plusMinus}
-              data-saves={player.saves}
-              data-shotsagainst={player.shotsAgainst}
-              data-goalsagainst={player.goalsAgainst}
-              data-savepercentage={player.savePercentage}
-              data-shutouts={player.shutouts}
-            >
-              <img src={player.image} alt={`${player.name} portrait`} />
-
-              <div class="player-info">
-                <span>#{player.number} · {player.position}</span>
-                <h3>{player.gamertag}</h3>
-                <p>{player.name}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      ) : (
-        <p class="empty-roster">Roster coming soon.</p>
-      )}
+      <div class="roster-content" data-roster-content>
+        <p class="loading-message">Loading roster...</p>
+      </div>
     </section>
+  </main>
 
-    <dialog class="player-modal">
-      <div class="modal-content">
-        <button type="button" class="modal-close" aria-label="Close player card">
-          ×
-        </button>
+  <div class="player-modal" data-player-modal>
+    <button class="modal-backdrop" data-close-modal aria-label="Close player modal"></button>
 
-        <img class="modal-image" src="" alt="" />
+    <div class="modal-card">
+      <button class="modal-close" data-close-modal aria-label="Close player modal">
+        ×
+      </button>
 
-        <p class="modal-number"></p>
+      <div class="modal-image-wrap">
+        <img src="/teams/players/player-placeholder.jpg" alt="" class="modal-image" />
+      </div>
+
+      <div class="modal-info">
+        <p class="modal-position"></p>
         <h2 class="modal-gamertag"></h2>
         <p class="modal-name"></p>
 
         <p class="stats-season-label">Current season</p>
 
         <div class="modal-stats">
-          <div>
+          <div class="modal-stat-item">
             <span class="stat-value modal-stat-1"></span>
             <span class="stat-label modal-label-1"></span>
           </div>
 
-          <div>
+          <div class="modal-stat-item">
             <span class="stat-value modal-stat-2"></span>
             <span class="stat-label modal-label-2"></span>
           </div>
 
-          <div>
+          <div class="modal-stat-item">
             <span class="stat-value modal-stat-3"></span>
             <span class="stat-label modal-label-3"></span>
           </div>
 
-          <div>
+          <div class="modal-stat-item">
             <span class="stat-value modal-stat-4"></span>
             <span class="stat-label modal-label-4"></span>
           </div>
 
-          <div>
+          <div class="modal-stat-item">
             <span class="stat-value modal-stat-5"></span>
             <span class="stat-label modal-label-5"></span>
           </div>
-        </div>
-        </div>
-    </dialog>
-  </main>
 
-  <style>
+          <div class="modal-stat-item">
+            <span class="stat-value modal-stat-6"></span>
+            <span class="stat-label modal-label-6"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style is:global>
     .team-page {
       min-height: 100vh;
       padding: 12rem 2rem 6rem;
     }
 
     .team-hero {
-      max-width: 1000px;
-      margin: 0 auto 5rem;
+      max-width: 1100px;
+      margin: 0 auto 6rem;
       text-align: center;
+
+      padding: 3rem 2rem;
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(103,149,64,.22);
+      border-radius: 36px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.28);
     }
 
-    .team-label {
+    .eyebrow {
       color: #679540;
       font-family: 'Michroma', sans-serif;
-      text-transform: uppercase;
+      font-size: 0.8rem;
       letter-spacing: 3px;
+      text-transform: uppercase;
       margin: 0 0 1rem;
     }
 
     .team-hero h1 {
-      font-size: clamp(4rem, 9vw, 9rem);
-      letter-spacing: 5px;
+      font-size: clamp(4rem, 9vw, 8rem);
       line-height: 1.05;
+      letter-spacing: 2px;
       margin: 0 0 2rem;
     }
 
-    .team-hero p {
-      max-width: 800px;
+    .team-hero > p:last-child {
+      max-width: 760px;
       margin: 0 auto;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 1.7;
-      opacity: 0.9;
+      color: rgba(255,255,255,.92);
+      text-shadow: 0 2px 12px rgba(0,0,0,.65);
     }
 
     .roster-section {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      text-align: center;
     }
 
-    .roster-section h2 {
-      font-size: clamp(3rem, 6vw, 5rem);
-      margin: 0 0 4rem;
+    .section-heading {
+      margin-bottom: 2rem;
+      text-align: left;
+
+      padding: 1.5rem 1.7rem;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(103,149,64,.18);
+      border-radius: 26px;
+      backdrop-filter: blur(6px);
+    }
+
+    .section-heading p {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 0.8rem;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    .section-heading span {
+      display: block;
+      max-width: 700px;
+      color: rgba(255,255,255,.92);
+      line-height: 1.6;
+      text-shadow: 0 2px 12px rgba(0,0,0,.6);
+    }
+
+    .roster-category {
+      margin-bottom: 4rem;
+    }
+
+    .roster-category-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+
+      margin-bottom: 1.4rem;
+      padding: 0 0.4rem;
+    }
+
+    .roster-category-header h3 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+    }
+
+    .roster-category-header span {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     .players-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-areas:
-        "lw lw c c rw rw"
-        ". lb lb rb rb ."
-        ". . gk gk . .";
-
-      gap: 2rem;
-
-      padding: 4rem 3rem;
-
-      background:
-        linear-gradient(to bottom, rgba(103,149,64,.18), transparent 45%),
-        rgba(36,36,36,.92);
-
-      border: 1px solid rgba(103,149,64,.3);
-      border-radius: 40px;
-
-      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
     }
 
     .player-card {
-      background: rgba(0,0,0,.45);
+      position: relative;
+      overflow: hidden;
+
+      min-height: 360px;
+      padding: 1.2rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
       color: white;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.92), rgba(0,0,0,.2)),
+        rgba(36,36,36,.95);
+      border: 1px solid rgba(103,149,64,.28);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.32);
 
-      border: 1px solid rgba(103,149,64,.45);
-      border-radius: 34px;
-
-      padding: 2rem;
       cursor: pointer;
 
-      text-align: center;
-
-      box-shadow: 0 20px 50px rgba(0,0,0,.35);
-
       transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
     }
 
     .player-card:hover {
-      transform: translateY(-8px);
-      background: rgba(0,0,0,.65);
+      transform: translateY(-6px);
       border-color: rgba(103,149,64,.85);
-      box-shadow: 0 0 28px rgba(103,149,64,.35);
+      background:
+        linear-gradient(to top, rgba(0,0,0,.92), rgba(103,149,64,.15)),
+        rgba(36,36,36,.95);
     }
 
-    .player-position-lw {
-      grid-area: lw;
-    }
-
-    .player-position-c {
-      grid-area: c;
-    }
-
-    .player-position-rw {
-      grid-area: rw;
-    }
-
-    .player-position-lb {
-      grid-area: lb;
-    }
-
-    .player-position-rb {
-      grid-area: rb;
-    }
-
-    .player-position-gk {
-      grid-area: gk;
-    }
-
-    .player-card img {
-      width: 220px;
-      height: 220px;
+    .player-card-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(103,149,64,.35);
+      opacity: 0.28;
+      z-index: 0;
     }
 
-    .player-info span {
+    .player-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .player-number {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      color: rgba(255,255,255,.18);
+      font-family: 'Michroma', sans-serif;
+      font-size: 3.6rem;
+      line-height: 1;
+      z-index: 1;
+    }
+
+    .player-role {
       color: #679540;
       font-family: 'Michroma', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 0.7rem;
     }
 
-    .player-info h3 {
-      font-size: 1.5rem;
-      margin: 0.8rem 0 0.4rem;
+    .player-card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 1.7rem;
+      font-family: 'Michroma', sans-serif;
+    }
+
+    .player-card-name {
+      margin: 0 0 1.2rem;
+      opacity: 0.8;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+
+    .mini-stats div {
+      padding: 0.7rem 0.4rem;
+      text-align: center;
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+    }
+
+    .mini-stats strong {
+      display: block;
+      font-family: 'Michroma', sans-serif;
+      font-size: 1rem;
+    }
+
+    .mini-stats span {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.68rem;
+      opacity: 0.75;
       text-transform: uppercase;
     }
 
-    .player-info p {
+    .empty-group,
+    .loading-message,
+    .error-message {
+      padding: 2rem;
       margin: 0;
-      opacity: 0.8;
+      text-align: center;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(103,149,64,.18);
+      border-radius: 24px;
     }
 
-    .empty-roster {
-      font-size: 1.2rem;
-      opacity: 0.8;
+    .error-message {
+      border-color: rgba(255,80,80,.35);
     }
 
     .player-modal {
-      width: min(92vw, 600px);
-      padding: 0;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 2rem;
+    }
+
+    .player-modal.open {
+      display: flex;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.78);
       border: none;
-      border-radius: 36px;
-      background: transparent;
-      color: white;
+      cursor: pointer;
     }
 
-    .player-modal::backdrop {
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-content {
+    .modal-card {
       position: relative;
-      padding: 3rem 2rem;
-      background: #242424;
+      z-index: 1;
+
+      width: min(980px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 2rem;
+
+      padding: 2rem;
+      background: rgba(20,20,20,.98);
       border: 1px solid rgba(103,149,64,.4);
       border-radius: 36px;
-      text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
     }
 
     .modal-close {
       position: absolute;
       top: 1rem;
-      right: 1.2rem;
+      right: 1rem;
 
-      background: transparent;
-      border: none;
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       color: white;
+      background: rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50%;
+
       font-size: 2rem;
+      line-height: 1;
       cursor: pointer;
+      z-index: 2;
+    }
+
+    .modal-image-wrap {
+      overflow: hidden;
+      min-height: 480px;
+      border-radius: 28px;
+      background: rgba(0,0,0,.45);
     }
 
     .modal-image {
-      width: 180px;
-      height: 180px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(103,149,64,.45);
+      display: block;
+      opacity: 0.75;
     }
 
-    .modal-number {
+    .modal-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .modal-position {
       color: #679540;
       font-family: 'Michroma', sans-serif;
-      letter-spacing: 2px;
-      margin: 0 0 0.8rem;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
     }
 
     .modal-gamertag {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin: 0 0 0.5rem;
-      text-transform: uppercase;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1.05;
+      margin: 0 0 1rem;
     }
 
     .modal-name {
-      margin: 0 0 2.5rem;
-      opacity: 0.8;
+      margin: 0 0 2rem;
+      opacity: 0.85;
+      font-size: 1.1rem;
     }
 
-
     .stats-season-label {
-      color: white;
+      color: #679540;
       font-family: 'Michroma', sans-serif;
       font-size: 0.8rem;
       letter-spacing: 2px;
       text-transform: uppercase;
 
-      margin: -1.2rem 0 1.5rem;
+      margin: 0 0 1.5rem;
       opacity: 0.95;
     }
 
     .modal-stats {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
     }
 
-    .modal-stats div {
-      padding: 1rem 0.5rem;
-      background: rgba(0,0,0,.35);
+    .modal-stat-item {
+      padding: 1.1rem 0.8rem;
+      text-align: center;
+      background: rgba(0,0,0,.4);
+      border: 1px solid rgba(103,149,64,.25);
       border-radius: 18px;
+    }
+
+    .modal-stat-item.hidden {
+      display: none;
     }
 
     .stat-value {
       display: block;
-      color: #679540;
       font-family: 'Michroma', sans-serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.6rem;
+      margin-bottom: 0.35rem;
     }
 
     .stat-label {
-      font-size: 0.8rem;
+      display: block;
       opacity: 0.75;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    @media (max-width: 1000px) {
-      .players-grid {
-        padding: 3rem 2rem;
+    @media (max-width: 900px) {
+      .section-heading {
+        text-align: center;
       }
 
-      .player-card img {
-        width: 180px;
-        height: 180px;
+      .section-heading span {
+        margin: 0 auto;
+      }
+
+      .modal-card {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-image-wrap {
+        min-height: 320px;
+      }
+
+      .modal-info {
+        padding: 0;
       }
     }
 
@@ -378,46 +509,22 @@ const getPositionClass = (position: string) => {
       }
 
       .team-hero {
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
+        padding: 2.2rem 1rem;
+        border-radius: 28px;
       }
 
       .team-hero h1 {
         font-size: clamp(3rem, 15vw, 4.8rem);
-        letter-spacing: 2px;
-      }
-
-      .team-hero p {
-        font-size: 0.95rem;
-      }
-
-      .roster-section h2 {
-        font-size: clamp(2.5rem, 12vw, 4rem);
-        margin-bottom: 3rem;
+        letter-spacing: 1px;
       }
 
       .players-grid {
         grid-template-columns: 1fr;
-        grid-template-areas:
-          "lw"
-          "c"
-          "rw"
-          "lb"
-          "rb"
-          "gk";
-
-        padding: 2rem 1rem;
-        gap: 1rem;
-        border-radius: 28px;
       }
 
       .player-card {
-        padding: 2rem 1.5rem;
-        border-radius: 28px;
-      }
-
-      .player-card img {
-        width: 190px;
-        height: 190px;
+        min-height: 320px;
       }
 
       .modal-stats {
@@ -427,104 +534,278 @@ const getPositionClass = (position: string) => {
   </style>
 
   <script>
-    const modal = document.querySelector('.player-modal') as HTMLDialogElement | null;
-    const playerCards = document.querySelectorAll('.player-card');
-    const closeButton = document.querySelector('.modal-close');
+    type TeamPlayer = {
+      id: string;
+      team: string;
+      name: string;
+      gamertag: string;
+      number: string;
+      dataName: string;
+      position: 'F' | 'D' | 'GK';
+      image: string;
+      stats: Record<string, number>;
+    };
 
+    type TeamRoster = {
+      slug: string;
+      name: string;
+      forwards: TeamPlayer[];
+      defensemen: TeamPlayer[];
+      goalkeepers: TeamPlayer[];
+    };
+
+    const teamPage = document.querySelector('[data-team-page]');
+    const rosterContent = document.querySelector('[data-roster-content]');
+
+    const modal = document.querySelector('[data-player-modal]');
     const modalImage = document.querySelector('.modal-image') as HTMLImageElement | null;
-    const modalNumber = document.querySelector('.modal-number');
+    const modalPosition = document.querySelector('.modal-position');
     const modalGamertag = document.querySelector('.modal-gamertag');
     const modalName = document.querySelector('.modal-name');
+    const closeButtons = document.querySelectorAll('[data-close-modal]');
 
-    const modalStats = [
-      {
-        value: document.querySelector('.modal-stat-1'),
-        label: document.querySelector('.modal-label-1'),
-      },
-      {
-        value: document.querySelector('.modal-stat-2'),
-        label: document.querySelector('.modal-label-2'),
-      },
-      {
-        value: document.querySelector('.modal-stat-3'),
-        label: document.querySelector('.modal-label-3'),
-      },
-      {
-        value: document.querySelector('.modal-stat-4'),
-        label: document.querySelector('.modal-label-4'),
-      },
-      {
-        value: document.querySelector('.modal-stat-5'),
-        label: document.querySelector('.modal-label-5'),
-      },
-    ];
-    playerCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        if (!modal) return;
+    const modalStatItems = Array.from(document.querySelectorAll('.modal-stat-item'));
 
-        const player = card as HTMLElement;
+    const currentTeam = teamPage?.getAttribute('data-team-page');
 
-        if (modalImage) {
-          modalImage.src = player.dataset.image || '';
-          modalImage.alt = `${player.dataset.name} portrait`;
-        }
+    const escapeHtml = (value: unknown) => {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    };
 
-        if (modalNumber) {
-          modalNumber.textContent = `#${player.dataset.number} · ${player.dataset.position}`;
-        }
+    const formatNumber = (value: number) => {
+      return Number.isFinite(value) ? String(value).replace('.', ',') : '0';
+    };
 
-        if (modalGamertag) {
-          modalGamertag.textContent = player.dataset.gamertag || '';
-        }
+    const getRoleLabel = (position: string) => {
+      if (position === 'F') return 'Forward';
+      if (position === 'D') return 'Defenseman';
+      if (position === 'GK') return 'Goalkeeper';
 
-        if (modalName) {
-          modalName.textContent = player.dataset.name || '';
-        }
+      return 'Player';
+    };
 
-          const isGoalkeeper = player.dataset.position === 'GK';
+    const renderMiniStats = (player: TeamPlayer) => {
+      if (player.position === 'GK') {
+        return `
+          <div><strong>${formatNumber(player.stats.games)}</strong><span>GP</span></div>
+          <div><strong>${formatNumber(player.stats.saves)}</strong><span>Saves</span></div>
+          <div><strong>${formatNumber(player.stats.savePercentage)}%</strong><span>S%</span></div>
+          <div><strong>${formatNumber(player.stats.gaa)}</strong><span>GAA</span></div>
+        `;
+      }
 
-          const stats = isGoalkeeper
-            ? [
-                { label: 'Games', value: player.dataset.games || '0' },
-                { label: 'Saves', value: player.dataset.saves || '0' },
-                { label: 'Shots Against', value: player.dataset.shotsagainst || '0' },
-                { label: 'Save %', value: player.dataset.savepercentage || '0' },
-                { label: 'Shutouts', value: player.dataset.shutouts || '0' },
-              ]
-            : [
-                { label: 'Games', value: player.dataset.games || '0' },
-                { label: 'Goals', value: player.dataset.goals || '0' },
-                { label: 'Assists', value: player.dataset.assists || '0' },
-                { label: 'Points', value: player.dataset.points || '0' },
-                { label: '+/-', value: player.dataset.plusminus || '0' },
-              ];
+      return `
+        <div><strong>${formatNumber(player.stats.games)}</strong><span>GP</span></div>
+        <div><strong>${formatNumber(player.stats.goals)}</strong><span>G</span></div>
+        <div><strong>${formatNumber(player.stats.assists)}</strong><span>A</span></div>
+        <div><strong>${formatNumber(player.stats.points)}</strong><span>P</span></div>
+      `;
+    };
 
-          modalStats.forEach((statElement, index) => {
-            const stat = stats[index];
+    const renderPlayerCard = (player: TeamPlayer) => {
+      return `
+        <button
+          class="player-card"
+          type="button"
+          data-player-card
+          data-name="${escapeHtml(player.name)}"
+          data-gamertag="${escapeHtml(player.gamertag)}"
+          data-number="${escapeHtml(player.number)}"
+          data-position="${escapeHtml(player.position)}"
+          data-image="${escapeHtml(player.image)}"
+          data-games="${escapeHtml(player.stats.games)}"
+          data-goals="${escapeHtml(player.stats.goals)}"
+          data-assists="${escapeHtml(player.stats.assists)}"
+          data-points="${escapeHtml(player.stats.points)}"
+          data-saves="${escapeHtml(player.stats.saves)}"
+          data-pm="${escapeHtml(player.stats.pm)}"
+          data-ly="${escapeHtml(player.stats.ly)}"
+          data-savepercentage="${escapeHtml(player.stats.savePercentage)}"
+          data-gaa="${escapeHtml(player.stats.gaa)}"
+        >
+          <img
+            src="${escapeHtml(player.image)}"
+            alt=""
+            class="player-card-image"
+            loading="lazy"
+          />
 
-            if (statElement.value) {
-              statElement.value.textContent = stat.value;
-            }
+          <span class="player-number">#${escapeHtml(player.number || '-')}</span>
 
-            if (statElement.label) {
-              statElement.label.textContent = stat.label;
-            }
-          });
+          <div class="player-card-content">
+            <p class="player-role">${escapeHtml(getRoleLabel(player.position))}</p>
+            <h4>${escapeHtml(player.gamertag || player.name)}</h4>
+            <p class="player-card-name">${escapeHtml(player.name)}</p>
 
-        modal.showModal();
+            <div class="mini-stats">
+              ${renderMiniStats(player)}
+            </div>
+          </div>
+        </button>
+      `;
+    };
+
+    const renderRosterGroup = (
+      title: string,
+      label: string,
+      players: TeamPlayer[]
+    ) => {
+      return `
+        <section class="roster-category">
+          <div class="roster-category-header">
+            <h3>${escapeHtml(title)}</h3>
+            <span>${players.length} ${escapeHtml(label)}</span>
+          </div>
+
+          ${
+            players.length > 0
+              ? `
+                <div class="players-grid">
+                  ${players.map(renderPlayerCard).join('')}
+                </div>
+              `
+              : `<p class="empty-group">No players listed yet.</p>`
+          }
+        </section>
+      `;
+    };
+
+    const renderRoster = (team: TeamRoster) => {
+      if (!rosterContent) return;
+
+      rosterContent.innerHTML = `
+        ${renderRosterGroup('Forwards', 'players', team.forwards)}
+        ${renderRosterGroup('Defensemen', 'players', team.defensemen)}
+        ${renderRosterGroup('Goalkeepers', 'players', team.goalkeepers)}
+      `;
+
+      const playerCards = document.querySelectorAll('[data-player-card]');
+
+      playerCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          openModal(card as HTMLElement);
+        });
       });
+    };
+
+    const setModalStats = (
+      stats: Array<{ label: string; value: string | number }>
+    ) => {
+      modalStatItems.forEach((item, index) => {
+        const stat = stats[index];
+        const valueElement = item.querySelector('.stat-value');
+        const labelElement = item.querySelector('.stat-label');
+
+        if (!stat) {
+          item.classList.add('hidden');
+          return;
+        }
+
+        item.classList.remove('hidden');
+
+        if (valueElement) valueElement.textContent = String(stat.value);
+        if (labelElement) labelElement.textContent = stat.label;
+      });
+    };
+
+    const openModal = (playerCard: HTMLElement) => {
+      if (!modal) return;
+
+      const position = playerCard.dataset.position ?? '';
+
+      if (modalImage) {
+        modalImage.src = playerCard.dataset.image ?? '/teams/players/player-placeholder.jpg';
+      }
+
+      if (modalPosition) {
+        modalPosition.textContent = getRoleLabel(position);
+      }
+
+      if (modalGamertag) {
+        modalGamertag.textContent = playerCard.dataset.gamertag || playerCard.dataset.name || '';
+      }
+
+      if (modalName) {
+        const number = playerCard.dataset.number ? `#${playerCard.dataset.number} · ` : '';
+        modalName.textContent = `${number}${playerCard.dataset.name ?? ''}`;
+      }
+
+      if (position === 'GK') {
+        setModalStats([
+          { label: 'Games', value: formatNumber(Number(playerCard.dataset.games)) },
+          { label: 'Saves', value: formatNumber(Number(playerCard.dataset.saves)) },
+          { label: 'PM', value: formatNumber(Number(playerCard.dataset.pm)) },
+          { label: 'LY', value: formatNumber(Number(playerCard.dataset.ly)) },
+          {
+            label: 'S%',
+            value: `${formatNumber(Number(playerCard.dataset.savepercentage))}%`,
+          },
+          { label: 'GAA', value: formatNumber(Number(playerCard.dataset.gaa)) },
+        ]);
+      } else {
+        setModalStats([
+          { label: 'Games', value: formatNumber(Number(playerCard.dataset.games)) },
+          { label: 'Goals', value: formatNumber(Number(playerCard.dataset.goals)) },
+          { label: 'Assists', value: formatNumber(Number(playerCard.dataset.assists)) },
+          { label: 'Points', value: formatNumber(Number(playerCard.dataset.points)) },
+        ]);
+      }
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', closeModal);
     });
 
-    if (closeButton && modal) {
-      closeButton.addEventListener('click', () => {
-        modal.close();
-      });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
 
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-          modal.close();
+    const loadRoster = async () => {
+      if (!rosterContent || !currentTeam) return;
+
+      try {
+        const response = await fetch('/api/team-rosters', {
+          cache: 'no-store',
+        });
+
+        if (!response.ok) {
+          throw new Error('Could not load roster.');
         }
-      });
-    }
+
+        const data = await response.json();
+        const team = data.teams.find((item: TeamRoster) => item.slug === currentTeam);
+
+        if (!team) {
+          throw new Error('Team not found.');
+        }
+
+        renderRoster(team);
+      } catch (error) {
+        rosterContent.innerHTML = `
+          <p class="error-message">
+            Could not load roster. Check the Google Sheet connection.
+          </p>
+        `;
+      }
+    };
+
+    loadRoster();
   </script>
 </Layout>
