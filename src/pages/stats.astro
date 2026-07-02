@@ -1,0 +1,438 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { statGroups } from '../data/stats';
+
+const getNavLabel = (label: string) => {
+  if (label === 'Organization') {
+    return 'ORG';
+  }
+
+  return label;
+};
+---
+
+<Layout title="Stats | WIDA">
+  <main class="stats-page">
+    <section class="stats-hero">
+      <h1>Stats</h1>
+
+      <p class="stats-intro">
+        Here you can find all-time stats tables for WIDA players and goalkeepers.
+      </p>
+
+      <div class="stats-jump">
+        <p>Go to:</p>
+
+        <nav class="stats-nav" aria-label="Stats sections">
+          {statGroups.map((group) => (
+            <a href={`#${group.id}`}>{getNavLabel(group.label)}</a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <div class="stats-sections">
+      {statGroups.map((group) => (
+        <section class="stats-group" id={group.id}>
+          <div class="section-heading">
+            <p>{group.label}</p>
+            <h2>{group.title}</h2>
+            <span>{group.description}</span>
+          </div>
+
+          <div class="tables-grid">
+            <article class="table-card">
+              <div class="table-title">
+                <div>
+                  <p>Players</p>
+                  <h3>Point leaders</h3>
+                </div>
+
+                <span>All-time</span>
+              </div>
+
+              {group.players.length > 0 ? (
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Seasons</th>
+                        <th>Games</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                        <th>Points</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {group.players.map((player) => (
+                        <tr>
+                          <td class="rank-cell">{player.rank}</td>
+
+                          <td class="player-cell">
+                            <strong>{player.player}</strong>
+                            <span>{player.gamertag}</span>
+                          </td>
+
+                          <td>{player.seasons}</td>
+                          <td>{player.games}</td>
+                          <td>{player.goals}</td>
+                          <td>{player.assists}</td>
+                          <td class="highlight-cell">{player.points}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p class="empty-table">Player stats coming soon.</p>
+              )}
+            </article>
+
+            <article class="table-card">
+              <div class="table-title">
+                <div>
+                  <p>Goalkeepers</p>
+                  <h3>Goalie leaders</h3>
+                </div>
+
+                <span>All-time</span>
+              </div>
+
+              {group.goalies.length > 0 ? (
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Seasons</th>
+                        <th>Games</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Saves</th>
+                        <th>Save %</th>
+                        <th>SO</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {group.goalies.map((goalie) => (
+                        <tr>
+                          <td class="rank-cell">{goalie.rank}</td>
+
+                          <td class="player-cell">
+                            <strong>{goalie.player}</strong>
+                            <span>{goalie.gamertag}</span>
+                          </td>
+
+                          <td>{goalie.seasons}</td>
+                          <td>{goalie.games}</td>
+                          <td>{goalie.wins}</td>
+                          <td>{goalie.losses}</td>
+                          <td class="highlight-cell">{goalie.saves}</td>
+                          <td>{goalie.savePercentage}%</td>
+                          <td>{goalie.shutouts}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p class="empty-table">Goalkeeper stats coming soon.</p>
+              )}
+            </article>
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+
+  <style>
+    .stats-page {
+      min-height: 100vh;
+      padding: 12rem 2rem 6rem;
+    }
+
+    .stats-hero {
+      max-width: 1200px;
+      margin: 0 auto 7rem;
+      text-align: center;
+    }
+
+    .stats-hero h1 {
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 1.05;
+      letter-spacing: 2px;
+      margin: 0 0 2rem;
+    }
+
+    .stats-intro {
+      max-width: 760px;
+      margin: 0 auto 3rem;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    .stats-jump {
+      margin-top: 2.5rem;
+    }
+
+    .stats-jump p {
+      color: white;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+    }
+
+    .stats-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .stats-nav a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      padding: 0.9rem 1.2rem;
+
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(103,149,64,.35);
+      border-radius: 999px;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .stats-nav a:hover {
+      background: rgba(103,149,64,.18);
+      border-color: rgba(103,149,64,.8);
+
+    }
+
+    .stats-sections {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stats-group {
+      scroll-margin-top: 8rem;
+      margin-bottom: 7rem;
+    }
+
+    .section-heading {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .section-heading p {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 0.8rem;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    .section-heading span {
+      display: block;
+      max-width: 700px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .tables-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .table-card {
+      background: rgba(36,36,36,.94);
+      border: 1px solid rgba(103,149,64,.28);
+      border-radius: 34px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+
+    .table-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      padding: 1.5rem 1.6rem;
+      border-bottom: 1px solid rgba(103,149,64,.22);
+      background: rgba(0,0,0,.25);
+    }
+
+    .table-title p {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 0.35rem;
+    }
+
+    .table-title h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .table-title > span {
+      white-space: nowrap;
+      color: white;
+      opacity: 0.75;
+      font-size: 0.9rem;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 850px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 1.1rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    th {
+      color: #111;
+      background: #e6e6e6;
+      font-family: 'Michroma', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    tbody tr {
+      transition: background 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(103,149,64,.12);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rank-cell {
+      color: #679540;
+      font-family: 'Michroma', sans-serif;
+      font-weight: 700;
+    }
+
+    .player-cell {
+      text-align: left;
+      min-width: 230px;
+    }
+
+    .player-cell strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .player-cell span {
+      display: block;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+
+    .empty-table {
+      padding: 2rem;
+      margin: 0;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 900px) {
+      .section-heading {
+        text-align: center;
+      }
+
+      .section-heading span {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .stats-page {
+        padding: 8rem 1rem 4rem;
+      }
+
+      .stats-hero {
+        margin-bottom: 4rem;
+      }
+
+      .stats-hero h1 {
+        font-size: clamp(3rem, 15vw, 4.8rem);
+        letter-spacing: 1px;
+      }
+
+      .stats-intro {
+        font-size: 0.95rem;
+      }
+
+      .stats-nav {
+        gap: 0.6rem;
+      }
+
+      .stats-nav a {
+        font-size: 0.68rem;
+        padding: 0.75rem 0.9rem;
+      }
+
+      .stats-group {
+        margin-bottom: 4.5rem;
+      }
+
+      .table-card {
+        border-radius: 26px;
+      }
+
+      .table-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .table-title h3 {
+        font-size: 1.25rem;
+      }
+
+      th,
+      td {
+        padding: 0.9rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</Layout>
