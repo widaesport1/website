@@ -8,18 +8,17 @@ import Layout from '../layouts/Layout.astro';
       <h1>Stats</h1>
 
       <p class="stats-intro">
-        Here you can find all-time stats tables for WIDA players and goalkeepers.
+        Switch between ECL all-time stats and WIDA organization all-time stats.
       </p>
 
-      <div class="stats-jump">
-        <p>Go to</p>
+      <div class="stats-switcher" aria-label="Stats source switcher">
+        <button class="stats-source-button active" type="button" data-stats-source="ecl">
+          ECL stats
+        </button>
 
-        <nav class="stats-nav" aria-label="Stats sections">
-          <a href="#organization">ORG</a>
-          <a href="#wida">WIDA</a>
-          <a href="#wigor">WIGOR</a>
-          <a href="#wibe">WIBE</a>
-        </nav>
+        <button class="stats-source-button" type="button" data-stats-source="organization">
+          ORG stats
+        </button>
       </div>
     </section>
 
@@ -63,29 +62,15 @@ import Layout from '../layouts/Layout.astro';
       text-shadow: 0 2px 12px rgba(0,0,0,.65);
     }
 
-    .stats-jump {
-      margin-top: 2.5rem;
-    }
-
-    .stats-jump p {
-      color: #679540;
-      font-family: 'Michroma', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin: 0 0 1rem;
-    }
-
-    .stats-nav {
+    .stats-switcher {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 0.8rem;
     }
 
-    .stats-nav a {
+    .stats-source-button {
       color: white;
-      text-decoration: none;
       font-family: 'Michroma', sans-serif;
       font-size: 0.75rem;
       letter-spacing: 2px;
@@ -97,16 +82,23 @@ import Layout from '../layouts/Layout.astro';
       border: 1px solid rgba(103,149,64,.35);
       border-radius: 999px;
 
+      cursor: pointer;
+
       transition:
         background 0.2s ease,
         border-color 0.2s ease,
         transform 0.2s ease;
     }
 
-    .stats-nav a:hover {
+    .stats-source-button:hover {
       background: rgba(103,149,64,.18);
       border-color: rgba(103,149,64,.8);
       transform: translateY(-2px);
+    }
+
+    .stats-source-button.active {
+      background: rgba(103,149,64,.28);
+      border-color: rgba(103,149,64,.95);
     }
 
     .stats-sections {
@@ -114,12 +106,7 @@ import Layout from '../layouts/Layout.astro';
       margin: 0 auto;
     }
 
-    .stats-group {
-      scroll-margin-top: 8rem;
-      margin-bottom: 7rem;
-    }
-
-    .section-heading {
+    .stats-source-heading {
       margin-bottom: 2rem;
       text-align: left;
 
@@ -130,7 +117,7 @@ import Layout from '../layouts/Layout.astro';
       backdrop-filter: blur(6px);
     }
 
-    .section-heading p {
+    .stats-source-heading p {
       color: #679540;
       font-family: 'Michroma', sans-serif;
       font-size: 0.8rem;
@@ -139,13 +126,13 @@ import Layout from '../layouts/Layout.astro';
       margin: 0 0 0.8rem;
     }
 
-    .section-heading h2 {
+    .stats-source-heading h2 {
       font-size: clamp(2.2rem, 5vw, 4.6rem);
       line-height: 1.1;
       margin: 0 0 1rem;
     }
 
-    .section-heading span {
+    .stats-source-heading span {
       display: block;
       max-width: 700px;
       color: rgba(255,255,255,.92);
@@ -153,7 +140,7 @@ import Layout from '../layouts/Layout.astro';
       text-shadow: 0 2px 12px rgba(0,0,0,.6);
     }
 
-    .tables-grid {
+    .stats-table-stack {
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -206,7 +193,7 @@ import Layout from '../layouts/Layout.astro';
 
     table {
       width: 100%;
-      min-width: 800px;
+      min-width: 820px;
       border-collapse: collapse;
     }
 
@@ -245,7 +232,7 @@ import Layout from '../layouts/Layout.astro';
 
     .team-cell {
       font-family: 'Michroma', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 1px;
       text-transform: uppercase;
       opacity: 0.9;
@@ -267,11 +254,11 @@ import Layout from '../layouts/Layout.astro';
     }
 
     @media (max-width: 900px) {
-      .section-heading {
+      .stats-source-heading {
         text-align: center;
       }
 
-      .section-heading span {
+      .stats-source-heading span {
         margin: 0 auto;
       }
     }
@@ -296,17 +283,13 @@ import Layout from '../layouts/Layout.astro';
         font-size: 0.95rem;
       }
 
-      .stats-nav {
+      .stats-switcher {
         gap: 0.6rem;
       }
 
-      .stats-nav a {
+      .stats-source-button {
         font-size: 0.68rem;
         padding: 0.75rem 0.9rem;
-      }
-
-      .stats-group {
-        margin-bottom: 4.5rem;
       }
 
       .table-card {
@@ -361,6 +344,10 @@ import Layout from '../layouts/Layout.astro';
     };
 
     const statsContainer = document.querySelector('[data-stats-sections]');
+    const sourceButtons = document.querySelectorAll('[data-stats-source]');
+
+    let statGroups: StatGroup[] = [];
+    let activeSource = 'ecl';
 
     const escapeHtml = (value: unknown) => {
       return String(value ?? '')
@@ -372,15 +359,29 @@ import Layout from '../layouts/Layout.astro';
     };
 
     const formatTeam = (team: string) => {
-      if (team === 'wida') return 'Wida';
-      if (team === 'wigor') return 'Wigor';
-      if (team === 'wibe') return 'Wibe';
+      const normalizedTeam = String(team ?? '').toLowerCase();
+
+      if (normalizedTeam === 'wida') return 'Wida';
+      if (normalizedTeam === 'wigor') return 'Wigor';
+      if (normalizedTeam === 'wibe') return 'Wibe';
 
       return team;
     };
 
     const formatNumber = (value: number) => {
       return Number.isFinite(value) ? String(value).replace('.', ',') : '0';
+    };
+
+    const setActiveButton = () => {
+      sourceButtons.forEach((button) => {
+        const source = button.getAttribute('data-stats-source');
+
+        if (source === activeSource) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
     };
 
     const renderPlayerRows = (players: PlayerStat[]) => {
@@ -467,59 +468,78 @@ import Layout from '../layouts/Layout.astro';
       `;
     };
 
-    const renderStats = (groups: StatGroup[]) => {
+    const renderStats = () => {
       if (!statsContainer) return;
 
-      statsContainer.innerHTML = groups
-        .map(
-          (group) => `
-            <section class="stats-group" id="${escapeHtml(group.id)}">
-              <div class="section-heading">
+      const group = statGroups.find((item) => item.id === activeSource);
+
+      if (!group) {
+        statsContainer.innerHTML = `
+          <p class="error-message">
+            Could not load stats right now. Please try again later.
+          </p>
+        `;
+
+        return;
+      }
+
+      statsContainer.innerHTML = `
+        <section class="stats-source-heading">
+          <p>${escapeHtml(group.label)}</p>
+          <h2>${escapeHtml(group.title)}</h2>
+          <span>${escapeHtml(group.description)}</span>
+        </section>
+
+        <div class="stats-table-stack">
+          <article class="table-card">
+            <div class="table-title">
+              <div>
                 <p>${escapeHtml(group.label)}</p>
-                <h2>${escapeHtml(group.title)}</h2>
-                <span>${escapeHtml(group.description)}</span>
+                <h3>Player stats</h3>
               </div>
 
-              <div class="tables-grid">
-                <article class="table-card">
-                  <div class="table-title">
-                    <div>
-                      <p>Players</p>
-                      <h3>Point leaders</h3>
-                    </div>
+              <span>All-time</span>
+            </div>
 
-                    <span>ECL</span>
-                  </div>
+            ${renderPlayerRows(group.players)}
+          </article>
 
-                  ${renderPlayerRows(group.players)}
-                </article>
-
-                <article class="table-card">
-                  <div class="table-title">
-                    <div>
-                      <p>Goalkeepers</p>
-                      <h3>Goalie stats</h3>
-                    </div>
-
-                    <span>ECL</span>
-                  </div>
-
-                  ${renderGoalieRows(group.goalies)}
-                </article>
+          <article class="table-card">
+            <div class="table-title">
+              <div>
+                <p>${escapeHtml(group.label)}</p>
+                <h3>Goalkeeper stats</h3>
               </div>
-            </section>
-          `
-        )
-        .join('');
+
+              <span>All-time</span>
+            </div>
+
+            ${renderGoalieRows(group.goalies)}
+          </article>
+        </div>
+      `;
+
+      setActiveButton();
     };
+
+    sourceButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const source = button.getAttribute('data-stats-source');
+
+        if (!source) return;
+
+        activeSource = source;
+        renderStats();
+      });
+    });
 
     const loadStats = async () => {
       if (!statsContainer) return;
 
       try {
         const response = await fetch('/api/stats', {
-        cache: 'no-store',
-});
+          cache: 'no-store',
+        });
 
         if (!response.ok) {
           throw new Error('Could not load stats.');
@@ -527,11 +547,12 @@ import Layout from '../layouts/Layout.astro';
 
         const data = await response.json();
 
-        renderStats(data.statGroups);
+        statGroups = data.statGroups;
+        renderStats();
       } catch (error) {
         statsContainer.innerHTML = `
           <p class="error-message">
-            Could not load stats. Please try again later.
+            Could not load stats right now. Please try again later.
           </p>
         `;
       }

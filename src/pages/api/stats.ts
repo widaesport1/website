@@ -20,30 +20,20 @@ type GoalieStat = {
   gaa: number;
 };
 
-const teamSections = [
+const statSources = [
+  {
+    id: 'ecl',
+    label: 'ECL',
+    title: 'ECL all-time stats',
+    description: 'Overall ECL player and goalkeeper stats, including previous teams.',
+    range: "'ECL'!A1:H40",
+  },
   {
     id: 'organization',
     label: 'Organization',
     title: 'Organization all-time stats',
-    description: 'All-time stats across the WIDA organization.',
-  },
-  {
-    id: 'wida',
-    label: 'Wida',
-    title: 'Wida all-time stats',
-    description: 'All-time player and goalkeeper stats for Wida.',
-  },
-  {
-    id: 'wigor',
-    label: 'Wigor',
-    title: 'Wigor all-time stats',
-    description: 'All-time player and goalkeeper stats for Wigor.',
-  },
-  {
-    id: 'wibe',
-    label: 'Wibe',
-    title: 'Wibe all-time stats',
-    description: 'All-time player and goalkeeper stats for Wibe.',
+    description: 'All-time player and goalkeeper stats inside the WIDA organization.',
+    range: "'Pisteet organisaatio Alltime'!A1:H40",
   },
 ];
 
@@ -51,6 +41,7 @@ const parseNumber = (value: unknown) => {
   const cleanedValue = String(value ?? '')
     .replace('%', '')
     .replace(',', '.')
+    .replace('#DIV/0!', '')
     .trim();
 
   const number = Number(cleanedValue);
@@ -59,9 +50,11 @@ const parseNumber = (value: unknown) => {
 };
 
 const normalizeTeam = (value: unknown) => {
-  return String(value ?? '')
-    .trim()
-    .toLowerCase();
+  return String(value ?? '').trim();
+};
+
+const normalizeText = (value: unknown) => {
+  return String(value ?? '').trim().toLowerCase();
 };
 
 const fetchSheetRange = async (range: string) => {
@@ -92,8 +85,8 @@ const fetchSheetRange = async (range: string) => {
 };
 
 const isGoalieHeaderRow = (row: string[]) => {
-  const gamesHeader = String(row[2] ?? '').trim().toLowerCase();
-  const savesHeader = String(row[3] ?? '').trim().toLowerCase();
+  const gamesHeader = normalizeText(row[2]);
+  const savesHeader = normalizeText(row[3]);
 
   return gamesHeader === 'ottelut' && savesHeader === 'saves';
 };
@@ -111,7 +104,7 @@ const parsePlayerStats = (rows: string[][]): PlayerStat[] => {
     .filter((row) => row[0] && hasPlayerName(row))
     .map((row) => ({
       team: normalizeTeam(row[0]),
-      player: row[1] ?? '',
+      player: String(row[1] ?? '').trim(),
       games: parseNumber(row[2]),
       goals: parseNumber(row[3]),
       assists: parseNumber(row[4]),
@@ -131,7 +124,7 @@ const parseGoalieStats = (rows: string[][]): GoalieStat[] => {
     .filter((row) => row[0] && hasPlayerName(row))
     .map((row) => ({
       team: normalizeTeam(row[0]),
-      player: row[1] ?? '',
+      player: String(row[1] ?? '').trim(),
       games: parseNumber(row[2]),
       saves: parseNumber(row[3]),
       pm: parseNumber(row[4]),
@@ -161,26 +154,26 @@ const sortGoalies = (goalies: GoalieStat[]) => {
 
 export const GET: APIRoute = async () => {
   try {
-    const eclRows = await fetchSheetRange("'ECL'!A1:H40");
+    const sheetResults = await Promise.all(
+      statSources.map(async (source) => {
+        const rows = await fetchSheetRange(source.range);
 
-    const players = parsePlayerStats(eclRows);
-    const goalies = parseGoalieStats(eclRows);
-
-    const statGroups = teamSections.map((section) => {
-      if (section.id === 'organization') {
         return {
-          ...section,
-          players: sortPlayers(players),
-          goalies: sortGoalies(goalies),
+          ...source,
+          players: sortPlayers(parsePlayerStats(rows)),
+          goalies: sortGoalies(parseGoalieStats(rows)),
         };
-      }
+      })
+    );
 
-      return {
-        ...section,
-        players: sortPlayers(players.filter((player) => player.team === section.id)),
-        goalies: sortGoalies(goalies.filter((goalie) => goalie.team === section.id)),
-      };
-    });
+    const statGroups = sheetResults.map((source) => ({
+      id: source.id,
+      label: source.label,
+      title: source.title,
+      description: source.description,
+      players: source.players,
+      goalies: source.goalies,
+    }));
 
     return new Response(
       JSON.stringify({
