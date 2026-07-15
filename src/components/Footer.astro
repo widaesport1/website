@@ -39,6 +39,14 @@
       </div>
     </div>
   </div>
+
+  <div class="footer-credit">
+  Site made by{' '}
+  <a href="https://juliusjdev.com" target="_blank" rel="noopener noreferrer">
+  juliusjdev.com
+  </a>
+</div>
+
 </footer>
 
 <style>
@@ -132,6 +140,32 @@
     display: block;
   }
 
+
+
+  .footer-credit {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 1rem;
+
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-credit a {
+  color: #679540;
+  text-decoration: none;
+  font-weight: 700;
+
+  transition: opacity 0.2s ease;
+}
+
+.footer-credit a:hover {
+  opacity: 0.75;
+}
+
   @media (max-width: 800px) {
     .site-footer {
       width: 100%;
@@ -187,5 +221,10 @@
       width: 100%;
       max-width: 100px;
     }
+
+
+
+
+
   }
 </style>

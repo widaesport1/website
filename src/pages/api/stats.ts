@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
 
 type PlayerStat = {
   team: string;
@@ -58,11 +59,14 @@ const normalizeText = (value: unknown) => {
 };
 
 const fetchSheetRange = async (range: string) => {
-  const apiKey = import.meta.env.GOOGLE_SHEETS_API_KEY;
-  const sheetId = import.meta.env.GOOGLE_SHEET_ID;
+  const apiKey =
+    env.GOOGLE_SHEETS_API_KEY ?? import.meta.env.GOOGLE_SHEETS_API_KEY;
+
+  const sheetId =
+    env.GOOGLE_SHEET_ID ?? import.meta.env.GOOGLE_SHEET_ID;
 
   if (!apiKey || !sheetId) {
-    throw new Error('Missing GOOGLE_SHEETS_API_KEY or GOOGLE_SHEET_ID in .env');
+    throw new Error('Missing GOOGLE_SHEETS_API_KEY or GOOGLE_SHEET_ID');
   }
 
   const url = new URL(
@@ -184,7 +188,7 @@ export const GET: APIRoute = async () => {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-store',
+          'Cache-Control': 'public, max-age=300',
         },
       }
     );

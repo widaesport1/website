@@ -18,7 +18,7 @@ import Layout from '../layouts/Layout.astro';
 
       <a href="https://www.twitch.tv/widaesport" target="_blank" rel="noopener noreferrer" class="social-icon twitch-icon">
         <i class="fab fa-twitch"></i>
-        <span class="live-badge">LIVE</span>
+        <span class="live-badge" data-twitch-live>LIVE</span>
       </a>
 
       <a href="https://www.instagram.com/widaesport/" target="_blank" rel="noopener noreferrer">
@@ -107,6 +107,9 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .live-badge {
+
+      display: none;
+
       position: absolute;
       top: -8px;
       right: -12px;
@@ -122,6 +125,10 @@ import Layout from '../layouts/Layout.astro';
 
       letter-spacing: 1px;
     }
+
+    .live-badge.visible {
+  display: inline-flex;
+}
 
     .hero {
   min-height: 100vh;
@@ -506,13 +513,31 @@ import Layout from '../layouts/Layout.astro';
   </style>
 
   <script>
-    const twitchLive = true;
+    // const twitchLive = true;
 
-    const liveBadge = document.querySelector('.live-badge') as HTMLElement;
+const liveBadge = document.querySelector('[data-twitch-live]') as HTMLElement | null;
 
-    if (!twitchLive && liveBadge) {
-      liveBadge.style.display = 'none';
+const updateTwitchStatus = async () => {
+  try {
+    const response = await fetch('/api/twitch-status');
+
+    if (!response.ok) {
+      throw new Error('Failed to load Twitch status');
     }
+
+    const data = await response.json();
+
+    if (liveBadge) {
+      liveBadge.classList.toggle('visible', Boolean(data.live));
+    }
+  } catch {
+    if (liveBadge) {
+      liveBadge.classList.remove('visible');
+    }
+  }
+};
+
+updateTwitchStatus();
 
     const slideElements = document.querySelectorAll('.slide-in');
 
